@@ -24,7 +24,7 @@ h4 {
     margin-bottom: 30px;
 }
 
-textarea {
+#userString {
     width: 80%;
     height: 100px;    
     margin: 10px auto;
