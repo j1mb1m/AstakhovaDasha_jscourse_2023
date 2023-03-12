@@ -8,7 +8,7 @@ let language = Languages.NONE;
 
 function completeQuestionnaire() {
     let fio = enterFIO();
-    let age = enterAge("Сколько вам лет ?");
+    let age = enterAge("Сколько вам лет (введите полные года)?");
     let gender = confirm("Bаш пол - мужской? \nВыберите \"ОК\", если пол мужской; выберите \"ОТМЕНА\", если пол женский.");
 
     let information = `ваше ФИО: ${fio}
@@ -40,14 +40,21 @@ function toCamelCase(str) {
 function enterStringFromPrompt(msg) {
     let str = "";
     let hasExp = false;
+    let hasNull = false;
 
     do {
         str = prompt((hasExp ? msgExp : "")
+            + (hasNull ? "Поле обязательно для заполнения!!!!\n" : "")
             + `${msg} ${language == Languages.NONE ? "" : "(используйте раскладку \"" + language + "\")"}`);
 
+        if (str == null) {
+            hasNull = true;
+            continue;
+        }
         hasExp = true;
+        hasNull = false;
 
-    } while (!validateString(str));
+    } while (str == null || !validateString(str));
 
     return str.trim();
 }
@@ -80,7 +87,7 @@ function enterAge(msg) {
         str = Number(str);
         hasExp = true;
 
-    } while (isNaN(str) || !(str > 0 && str < 130));
+    } while (isNaN(str) || !(str > 0 && str < 130) || Math.round(str) != str);
 
     return str;
 }
