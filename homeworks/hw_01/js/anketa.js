@@ -53,8 +53,7 @@ function enterStringFromPrompt(msg) {
 }
 
 function validateString(value) {
-    console.log(ALPHABET_ENG.test(value));
-    console.log(ALPHABET_RU.test(value));
+
     switch (language) {
         case Languages.ENG: return ALPHABET_ENG.test(value);
         case Languages.RU: return ALPHABET_RU.test(value);
