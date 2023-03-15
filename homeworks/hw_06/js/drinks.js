@@ -1,6 +1,6 @@
 "use strict";
 
-var drinkStorage = new HashStorageFunc();
+var drinkStorage = new HashStorageClass();
 
 var inputDrink = document.getElementById("inputDrink");
 inputDrink.onclick = function () {
