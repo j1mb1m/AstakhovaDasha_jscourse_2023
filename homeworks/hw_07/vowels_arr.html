@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../../icon.png" sizes="16x16" type="image/png">
+    <link href="../../homeworks/css/style.css" rel="stylesheet">
+    <title>№ 17</title>
+</head>
+
+<body>
+    <div class="container">
+        <h1>N.17 Домашнее задание VOWELS_ARR</h1>
+        <div class="homework">
+            <p>Переписать ДЗ VOWELS (подсчёт гласных букв в строке) без использования циклов, тремя способами:</p>
+            <ul>
+                <li>с использованием метода массива forEach,</li>
+                <li>с использованием метода массива filter,</li>
+                <li>с использованием метода массива reduce.</li>
+            </ul>
+            <p>Подсчёт каждым способом должен быть оформлен в виде чистой функции, получающей строку и возвращающей количество гласных букв в ней.</p>
+            <p>Спросить у пользователя строку. Вызвать с этой строкой все три функции. Отобразить три результата, которые они вернули.</p>
+        </div>
+        <textarea id = "userString" placeholder = "Введите текст" rows="4" cols="50"></textarea>
+        <div class="button" onclick="calc();">Рассчитать</div>
+        <div id="numberOfVowelsForEach">ForEach: -</div>
+        <div id="numberOfVowelsFilter">Filter: -</div>
+        <div id="numberOfVowelsReduce">Reduce: -</div>
+    </div>
+    <script src="vowels.js"></script>
+</body>
+
+</html>
