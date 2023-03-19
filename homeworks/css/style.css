@@ -38,6 +38,7 @@ textarea {
     background-color: white;
     margin: 5vh 20% 0 20%;
     min-height: 90vh;
+    height: fit-content;
 }
 
 .homework {
