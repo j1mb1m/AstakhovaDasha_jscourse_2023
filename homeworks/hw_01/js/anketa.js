@@ -47,14 +47,14 @@ function enterStringFromPrompt(msg) {
             + (hasNull ? "Поле обязательно для заполнения!!!!\n" : "")
             + `${msg} ${language == Languages.NONE ? "" : "(используйте раскладку \"" + language + "\")"}`);
 
-        if (str == null) {
+        if (!str) {
             hasNull = true;
             continue;
         }
         hasExp = true;
         hasNull = false;
 
-    } while (str == null || !validateString(str));
+    } while (!str || !validateString(str));
 
     return str.trim();
 }

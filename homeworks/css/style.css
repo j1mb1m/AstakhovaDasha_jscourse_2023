@@ -42,6 +42,7 @@ textarea {
 
 .homework {
     text-align: left;
+    position: relative;
 }
 
 .task {
