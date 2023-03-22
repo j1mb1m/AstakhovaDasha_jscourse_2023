@@ -38,101 +38,86 @@ function createForm(position, arrayProperties) {
     form.setAttribute("action", "https://fe.it-academy.by/TestForm.php");
     form.setAttribute("target", "_blank");
 
-    for (let i = 0; i < arrayProperties.length; i++) {
-        let currProperty = arrayProperties[i];
-        let div_el = form.appendChild(document.createElement("div"));
-        if ("label" in arrayProperties[i]) {
-            createLabel(div_el, currProperty.label, currProperty.name);
-        }
-
-        switch (currProperty.kind) {
-            case "longtext":
-                createInputText(div_el, currProperty.kind, currProperty.name);
-                break
-            case "number":
-                createInputText(div_el, currProperty.kind, currProperty.name);
-                break
-            case "shorttext":
-                createInputText(div_el, currProperty.kind, currProperty.name);
-                break
-            case "combo":
-                createSelect(div_el, currProperty.kind, currProperty.name, currProperty.variants);
-                break;
-            case "radio":
-                createRadio(div_el, currProperty.kind, currProperty.name, currProperty.variants);
-                break;
-            case "check":
-                createCheck(div_el, currProperty.kind, currProperty.name);
-                break;
-            case "memo":
-                createTextArea(div_el, currProperty.kind, currProperty.name);
-                break;
-            case "submit":
-                createButton(div_el, currProperty.kind, currProperty.caption);
-                break;  
-        }
+    arrayProperties.forEach(element => {
+        let div = form.appendChild(document.createElement("div"));
+        createTag(div, element);
     }
+    );
 }
 
-function createLabel(position, context, nameFor) {
-    let element = position.appendChild(document.createElement("label"));
+function createTag(position, element) {
+
+    if ("label" in element) {
+        position.appendChild(createLabel(element.label, element.name));
+    }
+
+    if (element.kind == "longtext" || element.kind == "shorttext") {
+        position.appendChild(createInput("input", "text", element.kind, element.name));
+    }
+    else if (element.kind == "number") {
+        position.appendChild(createInput("input", "number", element.kind, element.name));
+    }
+    else if (element.kind == "combo") {
+        position.appendChild(createSelect(element.kind, element.name, element.variants));
+    }
+    else if (element.kind == "radio") {
+        position.appendChild(createRadio(element.name, element.variants));
+    }
+    else if (element.kind == "check") {
+        let newElement = position.appendChild(createInput("input", "checkbox", element.kind, element.name));
+        newElement.checked = true;
+    }
+    else if (element.kind == "memo") {
+        position.appendChild(createInput("textarea", null, element.kind, element.name));
+    }
+    else if (element.kind == "submit") {
+        position.appendChild(createInput("input", "submit", element.kind, null, element.caption));
+    }
+
+}
+
+function createLabel(context, nameFor) {
+    let element = document.createElement("label");
     element.setAttribute("for", nameFor);
     element.textContent = context;
+
+    return element;
 }
 
-function createInputText(position, kind, inputName) {
-    let element = position.appendChild(document.createElement("input"));
-    element.setAttribute("data-kind", kind);
-    element.setAttribute("type", "text");
-    element.setAttribute("name", inputName);
-}
+function createSelect(kind, inputName, variants) {
+    let elSelect = createInput("select", null, kind, inputName);
 
-function createSelect(position, kind, inputName, variants) {
-    let element = position.appendChild(document.createElement("select"));
-    element.setAttribute("data-kind", kind);
-    element.setAttribute("name", inputName);
-
-    for (let i = 0; i < variants.length; i++) {
-        let variant = element.appendChild(document.createElement("option"));
-        variant.setAttribute("value", variants[i].value);
-        variant.textContent = variants[i].text;
+    variants.forEach(el => {
+        let variant = elSelect.appendChild(document.createElement("option"));
+        variant.setAttribute("value", el.value);
+        variant.textContent = el.text;
         variant.selected = true;
-    }
+    });
+
+    return elSelect;
 }
 
-function createRadio(position, kind, inputName, variants) {
-    let element = position.appendChild(document.createElement("div"));
+function createRadio(inputName, variants) {
+    let elRadio = document.createElement("div");
 
-    for (let i = 0; i < variants.length; i++) {
-        let variant = element.appendChild(document.createElement("input"));
-        variant.setAttribute("type", "radio");
-        variant.setAttribute("name", inputName);
-        variant.setAttribute("value", variants[i].value);
+    variants.forEach(el => {
+        elRadio.appendChild(createInput("input", "radio", null, inputName, el.value));
+        let variantName = elRadio.appendChild(document.createElement("span"));
+        variantName.textContent = el.text;
+    });
 
-        let variantName = element.appendChild(document.createElement("span"));
-        variantName.textContent = variants[i].text;
-    }
+    return elRadio;
 }
 
-function createCheck(position, kind, inputName) {
-    let element = position.appendChild(document.createElement("input"));
+function createInput(tag, tagType, kind, tagName, value) {
+
+    let element = document.createElement(tag);
+    if (tagType) element.setAttribute("type", tagType);
     element.setAttribute("data-kind", kind);
-    element.setAttribute("type", "checkbox");
-    element.setAttribute("name", inputName);
-    element.checked = true;
-}
+    element.setAttribute("name", tagName);
+    if (value) element.setAttribute("value", value);
 
-function createTextArea(position, kind, inputName) {
-    let element = position.appendChild(document.createElement("textarea"));
-    element.setAttribute("data-kind", kind);
-    element.setAttribute("name", inputName);
-}
-
-function createButton(position, kind, value) {
-    let element = position.appendChild(document.createElement("input"));
-    element.setAttribute("data-kind", kind);
-    element.setAttribute("type", "submit");
-    element.setAttribute("value", value);
+    return element;
 }
 
 window.onload = showForm();

@@ -1,0 +1,62 @@
+form {
+    border: gray 1px solid;
+    padding: 10px;
+    margin-top: 20px;
+}
+form>div {
+    position: relative;
+}
+
+label {
+    text-align: left;
+    display: block;
+    margin-right: 10px;
+    margin-top: 3px;
+    height: 20px;
+    width: 150px;
+}
+
+label+input,
+label+select,
+label+div {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 150px;
+    height: 20px;
+}
+
+textarea {
+    width: 100%;
+}
+
+label+input[type="submit"] {
+    position: relative;
+}
+
+label+input[data-kind="longtext"] {
+    max-width: 100%;
+}
+
+label+input[data-kind="number"] {
+    max-width: 80px;
+}
+
+label+input[data-kind="shorttext"],
+label+select[data-kind="combo"],
+label+input[dataKind="shorttext"],
+label+select[dataKind="combo"] {
+    max-width: 200px;
+}
+
+input[type="radio"] {
+    margin-right: 5px;
+}
+
+input[type="radio"]+span {
+    margin-right: 10px;
+}
+
+input[type="checkbox"] {
+    max-width: 15px;
+}
