@@ -40,22 +40,22 @@ function createForm(position, arrayProperties) {
 
     arrayProperties.forEach(element => {
         let div = form.appendChild(document.createElement("div"));
-        createTag(div, element);
+        createFormElement(div, element);
     }
     );
 }
 
-function createTag(position, element) {
+function createFormElement(position, element) {
 
     if ("label" in element) {
         position.appendChild(createLabel(element.label, element.name));
     }
 
     if (element.kind == "longtext" || element.kind == "shorttext") {
-        position.appendChild(createInput("input", "text", element.kind, element.name));
+        position.appendChild(createInput("input", "text", element));
     }
     else if (element.kind == "number") {
-        position.appendChild(createInput("input", "number", element.kind, element.name));
+        position.appendChild(createInput("input", "number", element));
     }
     else if (element.kind == "combo") {
         position.appendChild(createSelect(element.kind, element.name, element.variants));
@@ -64,14 +64,14 @@ function createTag(position, element) {
         position.appendChild(createRadio(element.name, element.variants));
     }
     else if (element.kind == "check") {
-        let newElement = position.appendChild(createInput("input", "checkbox", element.kind, element.name));
+        let newElement = position.appendChild(createInput("input", "checkbox", element));
         newElement.checked = true;
     }
     else if (element.kind == "memo") {
-        position.appendChild(createInput("textarea", null, element.kind, element.name));
+        position.appendChild(createTag("textarea", element));
     }
     else if (element.kind == "submit") {
-        position.appendChild(createInput("input", "submit", element.kind, null, element.caption));
+        position.appendChild(createInput("input", "submit", element));
     }
 
 }
@@ -100,8 +100,10 @@ function createSelect(kind, inputName, variants) {
 function createRadio(inputName, variants) {
     let elRadio = document.createElement("div");
 
+
     variants.forEach(el => {
-        elRadio.appendChild(createInput("input", "radio", null, inputName, el.value));
+        let options = {"name": inputName, "value": el.value};
+        elRadio.appendChild(createInput("input", "radio", options));
         let variantName = elRadio.appendChild(document.createElement("span"));
         variantName.textContent = el.text;
     });
@@ -109,13 +111,23 @@ function createRadio(inputName, variants) {
     return elRadio;
 }
 
-function createInput(tag, tagType, kind, tagName, value) {
+function createTag(tag, options) {
 
+    options = options || {}; 
     let element = document.createElement(tag);
+
+    if (options.kind) element.setAttribute("data-kind", options.kind);
+    if (options.name) element.setAttribute("name", options.name);
+    if (options.caption) element.setAttribute("value", options.caption);
+
+    return element;
+}
+
+function createInput(tag, tagType, options) {
+
+    let element = createTag(tag, options) 
+
     if (tagType) element.setAttribute("type", tagType);
-    element.setAttribute("data-kind", kind);
-    element.setAttribute("name", tagName);
-    if (value) element.setAttribute("value", value);
 
     return element;
 }
