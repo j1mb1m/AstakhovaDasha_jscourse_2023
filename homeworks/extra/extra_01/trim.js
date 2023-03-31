@@ -18,7 +18,7 @@ function trimSpaces(userString) {
     }
 
     if (startStr == userString.length - 1) {
-        console.info("Строка из одних пробелов. Возращаем пустую строку.");
+        console.info("Строка состоит из одних пробелов. Возращаем пустую строку.");
         return "";
     }
 
