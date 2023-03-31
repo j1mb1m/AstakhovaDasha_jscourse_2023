@@ -34,6 +34,6 @@ function trimSpaces(userString) {
         return userString
     };
 
-    console.info("Строка начинается в позиции " + startStr + " и заканчивается в позиции " + (endStr-1));   
+    console.info("Строка начинается в позиции " + startStr + " и заканчивается в позиции " + (endStr-1) + ". Обрезаем.");   
     return userString.slice(startStr, endStr);
 }
