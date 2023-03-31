@@ -8,16 +8,18 @@ function mood(colorsCount) {
     const colors = ['', 'красный', 'оранжевый', 'жёлтый', 'зелёный', 'голубой', 'синий', 'фиолетовый'];
     let colorsShowed = {};
 
-    if (colorsCount > colors.length) throw new Error("Количество цветов больше, чем можно выбрать!"); 
+    if (colorsCount > colors.length) throw new Error("Количество цветов больше, чем можно выбрать!");
 
     console.log('цветов: ' + colorsCount);
     for (let i = 1; i <= colorsCount; i++) {
-        const n = randomDiap(1, 7);
-        const colorName = colors[n];
-        if (colorName in  colorsShowed) {
-            i--;
-            continue;
-        }
+        let n = randomDiap(1, 7);
+        let colorName = colors[n];
+
+        while (colorName in colorsShowed){
+            n = randomDiap(1, 7);
+            colorName = colors[n];
+        } 
+
         colorsShowed[colorName] = colorName;
         console.log(colorName);
     }

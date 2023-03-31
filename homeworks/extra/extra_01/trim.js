@@ -11,17 +11,29 @@ function trimSpaces(userString) {
 
     for (let i = 0; i < userString.length; i++) {
         if (userString.charAt(i) !== ' ') {
+            console.info("Первый символ в начале строки в позиции (начиная с 0): " + i);
             startStr = i;
             break;
+        }
+        if (i == userString.length - 1) {
+            console.info("Строка из одних пробелов. Возращаем пустую строку.");
+            return "";
         }
     }
 
     for (let i = userString.length - 1; i >= 0; i--) {
         if (userString.charAt(i) !== ' ') {
+            console.info("Последний символ в конце строки в позиции (начиная с 0): " + i);
             endStr = i + 1;
             break;
         }
     }
 
+    if (startStr == 0 && endStr == userString.length) {
+        console.info("Строка не содержит пробелов. Возвращаем как есть.");       
+        return userString
+    };
+
+    console.info("Строка начинается в позиции " + startStr + " и заканчивается в позиции " + (endStr-1));   
     return userString.slice(startStr, endStr);
 }
