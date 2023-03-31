@@ -12,13 +12,12 @@ function mood(colorsCount) {
 
     console.log('цветов: ' + colorsCount);
     for (let i = 1; i <= colorsCount; i++) {
-        let n = randomDiap(1, 7);
-        let colorName = colors[n];
-
-        while (colorName in colorsShowed){
-            n = randomDiap(1, 7);
+        let colorName;
+        
+        do{
+            let n = randomDiap(1, 7);
             colorName = colors[n];
-        } 
+        } while (colorName in colorsShowed)
 
         colorsShowed[colorName] = colorName;
         console.log(colorName);
