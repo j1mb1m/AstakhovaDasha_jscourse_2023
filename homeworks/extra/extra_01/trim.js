@@ -15,10 +15,11 @@ function trimSpaces(userString) {
             startStr = i;
             break;
         }
-        if (i == userString.length - 1) {
-            console.info("Строка из одних пробелов. Возращаем пустую строку.");
-            return "";
-        }
+    }
+
+    if (startStr == userString.length - 1) {
+        console.info("Строка из одних пробелов. Возращаем пустую строку.");
+        return "";
     }
 
     for (let i = userString.length - 1; i >= 0; i--) {
@@ -30,10 +31,10 @@ function trimSpaces(userString) {
     }
 
     if (startStr == 0 && endStr == userString.length) {
-        console.info("Строка не содержит пробелов. Возвращаем как есть.");       
+        console.info("Строка не содержит пробелов. Возвращаем как есть.");
         return userString
     };
 
-    console.info("Строка начинается в позиции " + startStr + " и заканчивается в позиции " + (endStr-1) + ". Обрезаем. ");   
+    console.info("Строка начинается в позиции " + startStr + " и заканчивается в позиции " + (endStr - 1) + ". Обрезаем. ");
     return userString.slice(startStr, endStr);
 }
