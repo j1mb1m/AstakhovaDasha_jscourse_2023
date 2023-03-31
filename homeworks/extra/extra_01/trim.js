@@ -6,7 +6,7 @@ function main() {
 }
 
 function trimSpaces(userString) {
-    let startStr = 0;
+    let startStr = -1;
     let endStr = userString.length;
 
     for (let i = 0; i < userString.length; i++) {
@@ -17,7 +17,7 @@ function trimSpaces(userString) {
         }
     }
 
-    if (startStr == userString.length - 1) {
+    if (startStr == -1) {
         console.info("Строка состоит из одних пробелов. Возращаем пустую строку.");
         return "";
     }
