@@ -2,20 +2,16 @@
 "use srict";
 
 function calc() {
-    let numberOfVowelsForEach = document.getElementById("numberOfVowelsForEach");
-    let numberOfVowelsFilter = document.getElementById("numberOfVowelsFilter");
-    let numberOfVowelsReduce = document.getElementById("numberOfVowelsReduce");
 
+    const interface = [
+        {id: "numberOfVowelsForEach", func: getCountVowelsForEach, method: "ForEach"},
+        {id: "numberOfVowelsFilter", func: getCountVowelsFilter, method: "Filter"},
+        {id: "numberOfVowelsReduce", func: getCountVowelsReduce, method: "Reduce"},
+    ];   
+    
     let userString = document.getElementById("userString").value;
 
-    let countForEach = getCountVowelsForEach(userString);
-    let countFilter = getCountVowelsFilter(userString);
-    let countReduce = getCountVowelsReduce(userString);
-
-    numberOfVowelsForEach.innerText = `ForEach: в строке ${countForEach} гласных`;
-    numberOfVowelsFilter.innerText = `Filter: в строке ${countFilter} гласных`;
-    numberOfVowelsReduce.innerText = `Reduce: в строке ${countReduce} гласных`;
-
+    interface.forEach(value => document.getElementById(value.id).innerText = `${value.method}: в строке ${value.func(userString)} гласных`);
 }
 
 function getCountVowelsForEach(str) {
