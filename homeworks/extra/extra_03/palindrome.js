@@ -4,7 +4,7 @@ function checkString() {
 }
 
 function isPalindrome(str) {
-    let clearStr = str.toLowerCase().replace(/[^а-яёa-z0-9]/g, '').replace(/ёьЪ/g, 'е');
+    let clearStr = str.toLowerCase().replace(/[^а-яёa-z0-9]|[ьъ]/g, '').replace(/ё/g, 'е');
 
     if (clearStr.length == 0) { return false; }
     if (clearStr.length == 1) { return true; }
