@@ -6,10 +6,12 @@ function checkString() {
 function isPalindrome(str) {
     let clearStr = str.toLowerCase().replace(/[^а-яёa-z0-9]|[ьъ]/g, '').replace(/ё/g, 'е');
 
-    if (clearStr.length == 0) { return false; }
-    if (clearStr.length == 1) { return true; }
+    if (clearStr.length <= 1) { return true; }
 
-    for (let i = 0; i < (clearStr.length - 1)/ 2; i++) {
+    let middleStr = clearStr.length % 2 == 0 ? clearStr.length / 2 : (clearStr.length - 1) / 2;
+
+    for (let i = 0; i < middleStr; i++) {
+        console.log(`step ${i}: check indexes ${i} ${clearStr.length - 1 - i} `);
         if (clearStr.charAt(i) != clearStr.charAt(clearStr.length - 1 - i)) return false;
     }
 
