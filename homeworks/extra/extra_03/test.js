@@ -1,6 +1,7 @@
 describe('isPalindrome - the function of checking on the palindrome', function () {
 
     const testSet = [
+        { phrase: "лепель", answer: true },
         { phrase: "НА В ЛОБ, БОЛВАН", answer: true },
         { phrase: "Мат и тут и там", answer: true },
         { phrase: "Я аж орала, рожая!", answer: true },
