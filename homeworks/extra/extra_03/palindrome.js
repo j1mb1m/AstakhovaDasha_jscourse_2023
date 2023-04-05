@@ -8,10 +8,11 @@ function isPalindrome(str) {
 
     if (clearStr.length <= 1) { return true; }
 
-    let middleStr = clearStr.length % 2 == 0 ? clearStr.length / 2 : (clearStr.length - 1) / 2;
+    let middleStr = Math.floor(clearStr.length / 2);
 
     for (let i = 0; i < middleStr; i++) {
-        console.log(`step ${i}: check indexes ${i} ${clearStr.length - 1 - i} `);
+
+        console.log(`step ${i} check indexes ${i} ${clearStr.length - 1 - i} `);
         if (clearStr.charAt(i) != clearStr.charAt(clearStr.length - 1 - i)) return false;
     }
 
