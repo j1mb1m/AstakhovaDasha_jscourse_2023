@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../../../icon.png" sizes="16x16" type="image/png">
+    <link href="../../../homeworks/css/style.css" rel="stylesheet">
+    <!-- подключаем стили Mocha, для отображения результатов -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/2.1.0/mocha.css">
+    <!-- подключаем библиотеку Mocha -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/2.1.0/mocha.js"></script>
+    <!-- настраиваем Mocha: предстоит BDD-тестирование -->
+    <script>
+        mocha.setup('bdd');
+    </script>
+
+    <!-- подключаем chai -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/2.0.0/chai.js"></script>
+    <!-- в chai есть много всего, выносим assert в глобальную область -->
+    <script>
+        var assert = chai.assert;
+    </script>
+    <title>N.A3+</title>
+</head>
+
+<body>
+    <div class="container">
+        <!-- в этом скрипте находятся спеки -->
+
+        <h1>N.A3+ Домашнее задание ПАЛИНДРОМ</h1>
+        <div class="homework">
+            <p>Написать чистую функцию, проверяющую, что переданная ей фраза является палиндромом. <br>
+                (Палиндром - это фраза, которая слева направо читается так же как справа налево) <br>
+                Массивы при решении не использовать.<br>
+                При проверке должны игнорироваться:<br>
+                - регистр букв;<br>
+                - пробелы;<br>
+                - знаки препинания;<br>
+                - мягкие и твёрдые знаки;<br>
+                - разница между буквами "е" и "ё".<br>
+                Спросить у пользователя строку. Вывести через alert сообщение "это палиндром" или "это не палиндром".
+
+        </div>
+        <textarea id="userString" placeholder="Введите текст" rows="4" cols="50"></textarea>
+        <div id="check" class="button">Check</div>
+        <div class="button" onclick="mocha.run();">Тесты mocha</div>
+        <div id="mocha"></div>
+
+        <!-- запустить тесты! -->
+
+    </div>
+    <script src="palindrome.js"></script>
+    <script src="test.js"></script>
+
+</body>
+
+</html>
