@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../../../icon.png" sizes="16x16" type="image/png">
+    <link href="../../../homeworks/css/style.css" rel="stylesheet">
+    <title>N.B6+</title>
+</head>
+
+<body>
+    <div class="container">
+        <!-- в этом скрипте находятся спеки -->
+
+        <h1>N.B6+ Домашнее задание TAG</h1>
+        <div class="homework">
+            <p>Напишите функцию для оборачивания текста в тег с атрибутами, с которой можно было бы работать в следующем стиле: <br>
+            var wrapP=buildWrapper("P");   // строим функцию для оборачивания текста в тег P<br>
+            console.log( wrapP("Однажды в студёную зимнюю пору") );<br>
+            // в консоль выводится строка "&lt;P&gtОднажды в студёную зимнюю пору &lt;/P&gt" <br>
+            console.log( wrapP("Однажды в студёную зимнюю пору",{lang:"ru"}) );<br>
+            // в консоль выводится строка "&lt;P lang='ru'&gtОднажды в студёную зимнюю пору &lt;/P&gt"<br>
+          Функция должна учитывать, что некоторые символы надо заменять на HTML-мнемоники (а именно - символы < > ' " &):<br>
+            console.log( wrapP("Однажды в &lt;студёную&gt зимнюю пору") );<br>
+            // в консоль выводится строка "&lt;P&gtОднажды в &amp;lt;студёную&amp;gt; зимнюю пору&lt;/P&gt"<br>
+            var wrapH1=buildWrapper("H1"); // строим функцию для оборачивания текста в тег H1<br>
+            console.log( wrapH1("СТИХИ",{align:"center",title:"M&M's"}) );<br>
+            // в консоль выводится строка "&lt;H1 align='center' title='M&amp;amp;M&amp;apos;s'>СТИХИ&lt;/H1&gt"<br>
+          ВНИМАНИЕ! Не надо создавать никаких тегов (document.createElement), это задание просто на работу со строками.
+
+        </div>
+<!--         <label>Введие тэг: <input id="tag1" type="text"></input></label>
+        <textarea id="userString" placeholder="Введите текст" rows="2" cols="50"></textarea> -->
+        <div id="check" class="button">Тесты в консоль</div>
+
+
+    </div>
+    <script src="tags.js"></script>
+
+</body>
+
+</html>
