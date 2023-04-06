@@ -19,7 +19,7 @@ function buildWrapper(tagName) {
         let attributesStr = "";
         if (attributes) {
             for (let key in attributes) {
-                attributesStr += ` ${key} = '${convertToHTML(attributes[key])}'`;
+                attributesStr += ` ${key}='${convertToHTML(attributes[key])}'`;
             }
         }
 

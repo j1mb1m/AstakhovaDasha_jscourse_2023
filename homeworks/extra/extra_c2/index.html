@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../../../icon.png" sizes="16x16" type="image/png">
+    <link href="../../../homeworks/css/style.css" rel="stylesheet">
+    <!-- подключаем стили Mocha, для отображения результатов -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/2.1.0/mocha.css">
+    <!-- подключаем библиотеку Mocha -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/2.1.0/mocha.js"></script>
+    <!-- настраиваем Mocha: предстоит BDD-тестирование -->
+    <script>
+        mocha.setup('bdd');
+    </script>
+
+    <!-- подключаем chai -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/2.0.0/chai.js"></script>
+    <!-- в chai есть много всего, выносим assert в глобальную область -->
+    <script>
+        var assert = chai.assert;
+    </script>
+    <title>N.C2+</title>
+</head>
+
+<body>
+    <div class="container">
+        <!-- в этом скрипте находятся спеки -->
+
+        <h1>N.C2+ Домашнее задание deepCopy</h1>
+        <div class="homework">
+            <p>
+                Напишите функцию deepCopy для глубокого копирования переданного ей значения. <br>
+                Функция должна получать число, строку, логическое значение, null, undefined, хэш или массив и возвращать
+                его копию, включая все подхэши, подмассивы и т.д.<br>
+                Напишите тесты правильной работы функции, как минимум такие:
+            </p>
+            <p>
+                var h1={ a:5, b:{b1:6,b2:7}, c:[33,22], d:null, e:undefined, f:Number.NaN };<br>
+                var h2=deepCopy(h1);<br>
+                h1===h2 будет false<br>
+                h1.a===h2.a будет true<br>
+                h1.b===h2.b будет false<br>
+                h1.b.b1===h2.b.b1 будет true<br>
+                h1.c===h2.c будет false<br>
+                h1.c[0]===h2.c[0] будет true<br>
+                h1.d===h2.d будет true<br>
+                h1.e===h2.e будет true<br>
+                isNaN(h2.f) будет true<br>
+                h2.c instanceof Array будет true<br>
+            </p>
+        </div>
+        <div id="check" class="button">Тесты console</div>
+        <div class="button" onclick="mocha.run();">Тесты mocha</div>
+        <div id="mocha" class="homework"></div>
+
+        <!-- запустить тесты! -->
+
+    </div>
+    <script src="deepCopy.js"></script>
+    <script src="test.js"></script>
+
+</body>
+
+</html>
