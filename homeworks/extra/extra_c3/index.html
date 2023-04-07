@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../../../icon.png" sizes="16x16" type="image/png">
+    <link href="../../../homeworks/css/style.css" rel="stylesheet">
+    <!-- подключаем стили Mocha, для отображения результатов -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/2.1.0/mocha.css">
+    <!-- подключаем библиотеку Mocha -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/2.1.0/mocha.js"></script>
+    <!-- настраиваем Mocha: предстоит BDD-тестирование -->
+    <script>
+        mocha.setup('bdd');
+    </script>
+
+    <!-- подключаем chai -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/2.0.0/chai.js"></script>
+    <!-- в chai есть много всего, выносим assert в глобальную область -->
+    <script>
+        var assert = chai.assert;
+    </script>
+    <title>N.C3+</title>
+</head>
+
+<body>
+    <div class="container">
+        <!-- в этом скрипте находятся спеки -->
+
+        <h1>N.C3+ Домашнее задание DeepComp</h1>
+        <div class="homework">
+            <p>
+                Напишите функцию deepComp для глубокого сравнения переданных ей значений.<br>
+                Значения могут быть числами, строками, логическими значениями, хэшами, null, undefined, массивами, в т.ч. любого уровня вложения.<br>
+                Учтите, что цикл for..in не гарантирует перебора ключей хэша в каком-либо порядке.<br>
+                Не используйте Object.is().<br><br>
+            </p>
+            <p>
+                Напишите тесты правильной работы функции, как минимум такие:<br>
+                var H1={ a:5, b: { b1:6, b2:7 } };<br>
+                var H2={ b: { b1:6, b2:7 }, a:5 };<br>
+                var H3={ a:5, b: { b1:6 } };<br>
+                var H4={ a:5, b: { b1:66, b2:7 } };<br>
+                var H5={ a:5, b: { b1:6, b2:7, b3:8 } };<br>
+                var H6={ a:null, b:undefined, c:Number.NaN };<br>
+                var H7={ c:Number.NaN, b:undefined, a:null };<br>
+                var H8={a:5,b:6};<br>
+                var H9={c:5,d:6};<br>
+                var H10={a:5};<br>
+                var A1=[5,7];<br>
+                var A2=[5,5,7];<br>
+                var A3=[5,8,7];<br>
+                deepComp(H1,H2) будет true<br>
+                deepComp(H1,H3) будет false<br>
+                deepComp(H1,H4) будет false<br>
+                deepComp(H1,H5) будет false<br>
+                deepComp(H6,H7) будет true<br>
+                deepComp(H8,H9) будет false<br>
+                deepComp(H8,H10) будет false<br>
+                deepComp(null,H10) будет false<br>
+                deepComp(H10,null) будет false<br>
+                deepComp(null,null) будет true<br>
+                deepComp(null,undefined) будет false<br>
+                deepComp(5,"5") будет false<br>
+                deepComp(5,H1) будет false<br>
+                deepComp(A1,H1) будет false<br>
+                deepComp(A2,A3) будет false<br>
+                deepComp( {a:5,b:undefined}, {a:5,c:undefined} ) будет false<br>
+                deepComp([5,7],{0:5,1:7}) будет false<br>
+                deepComp( [5,7],{0:5,1:7,length:2} ) будет false<br>
+                deepComp("aaa","bbb") будет false<br>
+                deepComp(Number.NaN,Number.NaN) будет true<br>
+            </p>
+        </div>
+        <div id="check" class="button">Тесты console</div>
+        <div class="button" onclick="mocha.run();">Тесты mocha</div>
+        <div id="mocha" class="homework"></div>
+
+        <!-- запустить тесты! -->
+
+    </div>
+    <script src="deepComp.js"></script>
+    <script src="test.js"></script>
+
+</body>
+
+</html>
