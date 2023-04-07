@@ -17,8 +17,7 @@ function deepComp(obj1, obj2) {
     }
 
     if (typeof (obj1) === "object" && Object.keys(obj1).length === Object.keys(obj2).length) {
-        let kesObj1 = Object.keys(obj1);
-        return kesObj1.every(element => ((element in obj2) && deepComp(obj1[element], obj2[element])));
+        return Object.keys(obj1).every(element => ((element in obj2) && deepComp(obj1[element], obj2[element])));
     }
 
     return false;
