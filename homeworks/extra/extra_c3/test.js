@@ -33,7 +33,8 @@ describe('Test: deepComp - the function is intended for deep comparison of objec
         { obj1: [5, 7], obj2: { 0: 5, 1: 7 }, result: false },
         { obj1: [5, 7], obj2: { 0: 5, 1: 7, length: 2 }, result: false },
         { obj1: "aaa", obj2: "bbb", result: false },
-        { obj1: Number.NaN, obj2: Number.NaN, result: true }
+        { obj1: Number.NaN, obj2: Number.NaN, result: true },
+        { obj1: [5, 7], obj2: [7, 5], result: false }
     ];
 
     for (let element of testSet) {

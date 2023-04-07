@@ -13,17 +13,13 @@ function deepComp(obj1, obj2) {
     if (obj1.constructor.name != obj2.constructor.name) return false;
 
     if (Array.isArray(obj1) && Array.isArray(obj2) && obj1.length === obj2.length) {
-        obj1.sort();
-        obj2.sort();
-        return obj1.filter((element, index) => deepComp(element, obj2[index])).length === obj1.length;
+        return obj1.every((element, index) => deepComp(element, obj2[index]));
     }
 
     if (typeof (obj1) === "object" && Object.keys(obj1).length === Object.keys(obj2).length) {
         let kesObj1 = Object.keys(obj1);
-        return kesObj1.filter(element => ((element in obj2) ? deepComp(obj1[element], obj2[element]) : false)).length === kesObj1.length;
+        return kesObj1.every(element => ((element in obj2) && deepComp(obj1[element], obj2[element])));
     }
-
-
 
     return false;
 }
@@ -66,11 +62,12 @@ function doTest() {
         { obj1: 5, obj2: H1, result: false },
         { obj1: A1, obj2: H1, result: false },
         { obj1: A2, obj2: A3, result: false },
-        { obj1: { a: 5, b: undefined }, obj2: { a: 5, c: undefined }, result: false }, 
+        { obj1: { a: 5, b: undefined }, obj2: { a: 5, c: undefined }, result: false },
         { obj1: [5, 7], obj2: { 0: 5, 1: 7 }, result: false },
         { obj1: [5, 7], obj2: { 0: 5, 1: 7, length: 2 }, result: false },
         { obj1: "aaa", obj2: "bbb", result: false },
-        { obj1: Number.NaN, obj2: Number.NaN, result: true }
+        { obj1: Number.NaN, obj2: Number.NaN, result: true },
+        { obj1: [5, 7], obj2: [7, 5], result: false }
     ];
 
     test(testSet);
