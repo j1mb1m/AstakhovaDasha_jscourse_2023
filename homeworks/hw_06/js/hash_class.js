@@ -19,7 +19,7 @@ class HashStorageClass {
             delete this.data[key];
             return true; 
         }
-        return undefined;
+        return false;
     }
 
     getKeys(){

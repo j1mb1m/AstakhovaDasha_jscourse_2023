@@ -1,8 +1,8 @@
 "use strict";
  
 function HashStorageFunc(){
-    var self = this;
-    var data = {};
+    let self = this;
+    let data = {};
     
     self.addValue = function(key, value) {
         data[key] = value;
@@ -17,7 +17,7 @@ function HashStorageFunc(){
             delete data[key];
             return true; 
         }
-        return undefined;
+        return false;
     }
 
     self.getKeys = function(){
