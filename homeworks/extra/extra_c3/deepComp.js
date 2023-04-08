@@ -10,14 +10,17 @@ function deepComp(obj1, obj2) {
 
     if (typeof (obj1) === "number" && isNaN(obj1) && isNaN(obj2)) return true;
 
-    if (obj1.constructor.name != obj2.constructor.name) return false;
+    if (typeof (obj1) === "object" && obj1.constructor.name != obj2.constructor.name) return false;
 
     if (Array.isArray(obj1) && Array.isArray(obj2) && obj1.length === obj2.length) {
         return obj1.every((element, index) => deepComp(element, obj2[index]));
     }
 
-    if (typeof (obj1) === "object" && Object.keys(obj1).length === Object.keys(obj2).length) {
-        return Object.keys(obj1).every(element => ((element in obj2) && deepComp(obj1[element], obj2[element])));
+    if (typeof (obj1) === "object") {
+        let keysObj1 = Object.keys(obj1);
+        if (keysObj1.length === Object.keys(obj2).length) {
+            return keysObj1.every(element => ((element in obj2) && deepComp(obj1[element], obj2[element])));
+        }
     }
 
     return false;
