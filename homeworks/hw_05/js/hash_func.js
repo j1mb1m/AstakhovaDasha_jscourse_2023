@@ -21,11 +21,7 @@ function HashStorageFunc(){
     }
 
     self.getKeys = function(){
-        var keys = [];
-        for (var key in data){
-            keys[keys.length] = key; 
-        }
-        return keys;
+        return Object.keys(this.data);
     }
 
 }

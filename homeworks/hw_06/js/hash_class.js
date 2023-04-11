@@ -23,11 +23,7 @@ class HashStorageClass {
     }
 
     getKeys(){
-        var keys = [];
-        for (var key in this.data){
-            keys[keys.length] = key; 
-        }
-        return keys;
+        return Object.keys(this.data);
     }
 
 }
