@@ -1,4 +1,11 @@
 "use strict";
+const operation =
+{
+    '+': (x, y) => x + y,
+    '-': (x, y) => x - y,
+    '/': (x, y) => x / y,
+    '*': (x, y) => x * y
+};
 
 function calculate(str) {
 
@@ -7,20 +14,12 @@ function calculate(str) {
     1. выражения начинающиеся с '.', '/', '*', ')'
     2. выражения начинающиеся с '.', '/', '*', ')' после '(' 
     3. выражения с различными символами, которые не должны использоваться и буквами
-    4. где подряд идут символы '.', '/', '*' два и более раз
+    4. где подряд идут символы '.', '/', '*', '+', '-' два и более раз
     5. где операнды идут перед ')'
     6. где формула заканчивается операндами
     7. где точка не идет после числа*/
     if (/^[/*.)]|\([/*.)]|[^\d+-.*/\)\(]|[/*.]{2,}|[+-/*.]\)|[+-/*.\(]$|[^\d](?=[.])/g.test(str))
         throw { name: "UncorrectExpressionError", message: "The expression is not constructed correctly. Calculation cannot be performed." };
-
-    const operation =
-    {
-        '+': (x, y) => x + y,
-        '-': (x, y) => x - y,
-        '/': (x, y) => x / y,
-        '*': (x, y) => x * y
-    };
 
     str = str.replace(/ /g, "");
 
@@ -32,58 +31,61 @@ function calculate(str) {
     } while (true);
 
     /* Если все же есть символы '(' и ')' значит формула некоррекная, пробросим ошибку */
-    if (/[\(\)]+/g.test(str)) throw { name: "UncorrectExpressionError", message: "The expression is not constructed correctly. Calculation cannot be performed." };
+    if (/[\(\)]+/g.test(str)) throw { name: "UncorrectExpressionError", message: "The expression is not constructed correctly. Incorrect usage character '(', ')'" };
     /* Если нечего считать - выходим и возвращаем что получилось */
     if (!/[+*-/=]/g.test(str)) return Number(str);
 
-    /* посчитаем простую операцию */
-    function calculateStep(str) {
-        let indexOfEquals = str.indexOf('=');
-
-        if (indexOfEquals >= 0 && indexOfEquals != str.length - 1) throw { name: "UncorrectExpressionError", message: "Incorrect usage character '='" };
-        if (indexOfEquals < 0) str += "=";
-
-        const stack = [];
-        let firstIndex = 0;
-        let result = 0;
-        let prevOperand = "";
-        for (let index = 0; index < str.length; index++) {
-            if ("+-*/=".includes(str.charAt(index)) && !"+-*/=".includes(prevOperand)) {
-                let firstOperand = Number(str.slice(firstIndex, index));
-                let operand = str[index];
-                firstIndex = index + 1;
-
-                if (operand !== '*' && operand !== '/') {
-                    while (stack.length) {
-                        let prev = stack.pop();
-                        firstOperand = operation[prev.action](prev.value, firstOperand);
-                    }
-                }
-
-                if (operand == '=') {
-                    if (stack.length) throw { name: "UncorrectExpressionError", message: "Incorrect expression" };
-                    result = firstOperand;
-                }
-                else {
-                    stack.push({
-                        value: firstOperand,
-                        action: operand
-                    });
-                }
-                prevOperand = operand;
-            }
-            prevOperand = str.charAt(index);
-        }
-        return result;
-    }
-
     return calculateStep(str);
+}
 
+/* посчитаем простую операцию */
+function calculateStep(str) {
+    let indexOfEquals = str.indexOf('='); //якорь конца строки
+
+    str = str.replace(/--/g, "+").replace(/-\+/g, "-").replace(/\+-/g, "-").replace(/\+\+/g, "-");
+
+    if (indexOfEquals >= 0 && indexOfEquals != str.length - 1) throw { name: "UncorrectExpressionError", message: "Incorrect usage character '='" };
+    if (indexOfEquals < 0) str += "=";
+
+    const stack = [];
+    let firstIndex = 0;
+    let result = 0;
+    let prevOperand = "";
+    for (let index = 0; index < str.length; index++) {
+        if ("+-*/=".includes(str.charAt(index)) && !"+-*/=".includes(prevOperand)) {
+            let firstOperand = Number(str.slice(firstIndex, index));
+            let operand = str[index];
+            firstIndex = index + 1;
+
+            if (operand !== '*' && operand !== '/') {
+                while (stack.length) {
+                    let prev = stack.pop();
+                    firstOperand = operation[prev.action](prev.value, firstOperand);
+                }
+            }
+
+            if (operand == '=') {
+                if (stack.length) throw { name: "UncorrectExpressionError", message: "Incorrect expression." };
+                result = firstOperand;
+            }
+            else {
+                stack.push({
+                    value: firstOperand,
+                    action: operand
+                });
+            }
+            prevOperand = operand;
+        }
+        prevOperand = str.charAt(index);
+    }
+    return result;
 }
 
 function doTest() {
 
     let setTests = [
+        "-5*-(-3)",
+        "-5*-(3)",
         "-5*3*2",
         "5*3*(-2)",
         "1.3+9.56",
@@ -136,7 +138,7 @@ function doTest() {
 
 
 function enterTheFormula() {
-    let str = prompt("Введите формулу", "2*(-3+1)");
+    let str = prompt("Введите формулу", "2*-(-3+1)");
     try {
         alert(calculate(str));
     }
