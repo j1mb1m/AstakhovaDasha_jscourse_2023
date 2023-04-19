@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../../icon.png" sizes="16x16" type="image/png">
+    <link href="../../homeworks/css/style.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <title>№ 23</title>
+</head>
+
+<body>
+    <div class="container">
+        <h1>N.27 Домашнее задание VALID_FORM</h1>
+        <div class="homework">
+            <div class="SExampleDescription">
+                Разработать проект VALID_FORM. Внешний вид — примерно по образцу.
+                <br>Поле «Дата запуска сайта» должно быть тегом &lt;input type=date&gt;.
+                <br>Сделать валидацию вводимых значений; правила валидации продумать самостоятельно, описать их в комментариях; как минимум, пустое (начальное) значение каждого из полей должно считаться ошибочным.
+                <br><b>При уходе с текстового поля</b> формы или <b>сразу при изменении чекбокса, радиогруппы, выпадающего списка</b> — валидировать <b>только данное</b> поле и в случае ошибки сообщение об ошибке сразу отобразить <b>справа от поля</b> (сообщения об ошибках возле остальных полей не&nbsp;должны стираться); позволять пользователю уйти с поля, даже если оно заполнено с ошибкой.
+                <br>При попытке отправки формы — валидировать сразу <b>все поля</b> и отобразить сразу все сообщения об ошибках рядом с ошибочно заполненными полями, а также скроллировать страницу к первому ошибочно заполненному полю и, если возможно, сфокусировать это поле.
+                <br>В качестве скрипта, обрабатывающего данные формы (атрибут action тега form), можно установить https://fe.it-academy.by/TestForm.php
+                </div>
+        </div>
+        <div class="homework" id="solution">
+            <form name="info" method="POST" action="https://fe.it-academy.by/TestForm.php" target="_blank">
+                <div>
+                    <label for="developers">Разработчики:</label>
+                    <input type="text" data-kind="longtext" name="developers">
+                    <div class="error">Проверьте корректность ввода! Поле не может содержать числа.</div>
+                </div>
+                <div>
+                    <label for="sitename">Название сайта:</label>
+                    <input type="text" data-kind="longtext" name="sitename">
+                    <div class="error">Проверьте корректность ввода! Поле не может содержать буквы кириллицы и не может
+                        начинаться с цифр.</div>
+                </div>
+                <div>
+                    <label for="siteurl">URL сайта:</label>
+                    <input type="text" data-kind="longtext" name="siteurl">
+                    <div class="error">Проверьте корректность ввода! Пример ввода: https://www.site.com</div>
+                </div>
+                <div>
+                    <label for="launchdate">Дата запуска сайта:</label>
+                    <input type="date" data-kind="date" name="launchdate">
+                    <div class="error">Дата должна быть меньше текущей и не может быть пустой.</div>
+                </div>
+                <div>
+                    <label for="visitors">Посетителей в сутки:</label>
+                    <input type="text" data-kind="shorttext" name="visitors">
+                    <div class="error">Поле может содержать только цифры.</div>
+                </div>
+                <div>
+                    <label for="email">E-mail для связи:</label>
+                    <input type="text" data-kind="shorttext" name="email">
+                    <div class="error">Проверьте корректность ввода! Пример ввода: my-email@gmail.com</div>
+                </div>
+                <div>
+                    <label for="division">Рубрика каталога:</label>
+                    <select data-kind="combo" name="division">
+                        <option value="1">здоровье</option>
+                        <option value="2">домашний уют</option>
+                        <option value="3">бытовая техника</option>
+                    </select>
+                    <div class="error">Не доступно в вашем регионе</div>
+                </div>
+                <div>
+                    <label for="payment">Размещение:</label>
+                    <div id="radioPayent">
+                        <input type="radio" id="freePayment" value="1" name="payment"><span>бесплатное</span>
+                        <input type="radio" id="paidPayment" value="2" name="payment"><span>платное</span>
+                        <input type="radio" id="vipPayment" value="3" name="payment"><span>VIP</span>
+                    </div>
+                    <div class="error">Проверьте заполнение. Не доступно в вашем регионе. </div>
+                </div>
+                <div>
+                    <label for="votes">Разрешить отзывы:</label>
+                    <input type="checkbox" data-kind="check" name="votes">
+                    <div class="error">Для продолжения необходимо установить флаг.</div>
+                </div>
+                <div>
+                    <label for="description">Описание сайта:</label>
+                    <textarea data-kind="memo" name="description"></textarea>
+                    <div class="error">Поле не может быть пустым.</div>
+                </div>
+                <div>
+                    <input type="submit" data-kind="submit" value="Опубликовать">
+                </div>
+            </form>
+        </div>
+    </div>
+    <script src="valid_form.js"></script>
+
+</body>
+
+</html>
