@@ -53,6 +53,7 @@ function validateForm(e) {
                 iterator.classList.add('invalid');
             }
             if (!hasErrors){
+                iterator.scrollIntoView(); 
                 iterator.focus(); 
             }
             hasErrors = true;
@@ -67,6 +68,7 @@ function validateForm(e) {
 }
 
 function validateInpute(e) {
+    e = e || window.event;
     let target = e.target;
 
     switch (e.type) {

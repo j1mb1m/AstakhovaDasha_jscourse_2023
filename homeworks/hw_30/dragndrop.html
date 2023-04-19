@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../../icon.png" sizes="16x16" type="image/png">
+    <link href="../../homeworks/css/style.css" rel="stylesheet" type="text/css">
+    <link href="../css/style.css" rel="stylesheet" type="text/css">
+    <title>№ 30</title>
+</head>
+
+<body>
+    <div class="container">
+        <h1>N.30 Домашнее задание DRAGNDROP</h1>
+        <div class="homework">
+            <div class="SExampleDescription">
+                Подключить в проект из библиотеки веб-страницу dragdrop.html. Она выглядит так:
+                <br><br><img src="img/dragdrop.png" style="width:100%">
+                <br><br>Реализовать на JavaScript возможность перетаскивания мышью по веб-странице этих картинок.
+                Обрабатывать как минимум события mousedown, mousemove, mouseup; поддержку браузером drag&amp;drop не
+                использовать.
+                <br>Изображения должны «таскаться» мышью за любую точку (т.е. и при «взятии» и при «отпускании»
+                изображение смещаться не должно, оно должно смещаться только при смещении мыши при нажатой левой кнопке,
+                ровно настолько, насколько смещена мышь).
+                <br>Код не должен зависеть от количества картинок (т.е. код должен сам найти все картинки, которые есть
+                на веб-странице).
+                <br>Код никак не должен зависеть от того, как именно свёрстаны картинки — какие атрибуты и стилевые
+                свойства им заданы.
+                <br>Когда начинается перетаскивание какой-либо картинки, остальные картинки не должны сдвигаться.
+                <br>Картинка, перетаскивание которой началось, должна сразу оказаться выше (ближе к глазам), чем
+                остальные (z-index). После окончания перетаскивания картинки z-index ни&nbsp;одной из картинок меняться
+                не должен, т.е. взаимный z-index картинок должен остаться тем же, каким был во время перетаскивания.
+                <br>На время перетаскивания менять форму курсора на какую-нибудь подходящую.
+                <br>Вёрстку страницы никак не менять; вся работа — только внутри тега &lt;script&gt;.
+            </div>
+        </div>
+        <div class="homework" id="solution" style='min-height: 100vh'>
+            <img src='http://fe.it-academy.by/Sites/0000007/sax.jpg'>
+            <img src='http://fe.it-academy.by/Sites/0000007/Yin_and_Yang.png' width=100>
+            <img src='http://fe.it-academy.by/Sites/0000007/Man-and-woman.png' width=150>
+            <img src='http://fe.it-academy.by/Sites/0000007/No_smoking.png' style='padding-left: 50px'>
+        </div>
+    </div>
+    <script src="dragndrop.js"></script>
+
+</body>
+
+</html>
