@@ -85,14 +85,13 @@ function validateInpute(e) {
     }
 
 }
-
-for (const iterator of userForm.elements) {
-    if (iterator.type === "checkbox" || iterator.type === "radio") {
-        iterator.addEventListener('change', validateInpute, false);
+userForm.elements.array.forEach(element => {
+    if (element.type === "checkbox" || element.type === "radio") {
+        element.addEventListener('change', validateInpute, false);
     }
-    else if (iterator.type !== "submit") {
-        iterator.addEventListener('blur', validateInpute, false);
-        iterator.addEventListener('focus', validateInpute, false);
+    else if (element.type !== "submit") {
+        element.addEventListener('blur', validateInpute, false);
+        element.addEventListener('focus', validateInpute, false);
     }
+});
 
-}

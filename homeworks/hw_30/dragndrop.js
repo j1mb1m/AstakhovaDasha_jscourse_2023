@@ -1,6 +1,7 @@
 "use strict";
 const solution = document.getElementById('solution');
 let arr_img = solution.getElementsByTagName('img');
+
 for (const iterator of arr_img) {
     iterator.addEventListener('mousedown', mousedownHandler, false);
 }
