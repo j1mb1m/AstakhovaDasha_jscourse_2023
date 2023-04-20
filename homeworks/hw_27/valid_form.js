@@ -26,7 +26,7 @@ const validateRules = {
         return (!numberEmail.test(target.value) || !target.value.trim());
     },
     division: function (target) {
-        return (target.value == '3');
+        return (target.value == '1');
     },
     payment: function (target) {
         return (target.value !== '2' && target.value !== '3');
@@ -85,13 +85,15 @@ function validateInpute(e) {
     }
 
 }
-userForm.elements.array.forEach(element => {
-    if (element.type === "checkbox" || element.type === "radio") {
-        element.addEventListener('change', validateInpute, false);
-    }
-    else if (element.type !== "submit") {
-        element.addEventListener('blur', validateInpute, false);
-        element.addEventListener('focus', validateInpute, false);
-    }
-});
 
+
+ for (const iterator of userForm.elements) {
+    if (iterator.type === "checkbox" || iterator.type === "radio") {
+        iterator.addEventListener('change', validateInpute, false);
+    }
+    else if (iterator.type !== "submit") {
+        iterator.addEventListener('blur', validateInpute, false);
+        iterator.addEventListener('focus', validateInpute, false);
+    }
+}
+ 
