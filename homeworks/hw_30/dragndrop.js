@@ -14,15 +14,19 @@ function mousedownHandler(e) {
     let shiftX = e.clientX - markerObj.getBoundingClientRect().left;
     let shiftY = e.clientY - markerObj.getBoundingClientRect().top;
 
-    let newNode = markerObj.cloneNode(false);
+    let newNode = markerObj;
+    if (markerObj.style.position !== 'absolute') {
+        newNode = markerObj.cloneNode(false);
+        markerObj.style.visibility = 'hidden';
+        newNode.style.zIndex = 100;
+        newNode.style.position = 'absolute';
+        newNode.style.cursor = 'pointer';
+    }
+
     newNode.ondragstart = function () {
         return false;
     };
 
-    newNode.style.zIndex = 100;
-    newNode.style.position = 'absolute';
-    newNode.style.cursor = 'pointer';
-    markerObj.style.visibility = 'hidden';
     document.body.append(newNode);
 
     moveAt(e.pageX, e.pageY);
@@ -41,8 +45,7 @@ function mousedownHandler(e) {
     newNode.onmouseup = function () {
         document.removeEventListener('mousemove', onMouseMove);
         newNode.onmouseup = null;
-        document.body.removeChild(newNode);
-        markerObj.style.visibility = 'visible';
+        newNode.addEventListener('mousedown', mousedownHandler, false);
     };
 }
 
