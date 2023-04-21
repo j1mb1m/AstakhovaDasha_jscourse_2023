@@ -15,7 +15,7 @@ const validateRules = {
         return (!urlPattern.test(target.value) || !target.value.trim())
     },
     launchdate: function (target) {
-        return (!!(new Date(target.value)) || new Date(target.value) >= new Date());
+        return (target.value =='' || new Date(target.value) >= new Date());
     },
     visitors: function (target) {
         const numberPattern = /^\d+$/;
@@ -29,7 +29,12 @@ const validateRules = {
         return (target.value == '1');
     },
     payment: function (target) {
-        return (target.value !== '2' && target.value !== '3');
+        const radiobtns = document.getElementsByName(target.name);
+        let checkedValue = '-1';
+        for (const iterator of radiobtns){
+            if (iterator.checked) checkedValue = iterator.value;
+        }
+        return (checkedValue == '1' || checkedValue == '-1');
     },
     votes: function (target) {
         return !target.checked;
@@ -46,15 +51,15 @@ function validateForm(e) {
     let hasErrors = false;
     for (const iterator of userForm.elements) {
         if ((iterator.name in validateRules) && validateRules[iterator.name](iterator)) {
-            if (iterator.type === 'radio') {
+            if (iterator.type === 'radio' && !iterator.parentNode.classList.contains('invalid')) {
                 iterator.parentNode.classList.add('invalid');
             }
             else {
                 iterator.classList.add('invalid');
             }
-            if (!hasErrors){
-                iterator.scrollIntoView(); 
-                iterator.focus(); 
+            if (!hasErrors) {
+                iterator.scrollIntoView();
+                iterator.focus();
             }
             hasErrors = true;
         }
@@ -72,22 +77,33 @@ function validateInpute(e) {
     let target = e.target;
 
     switch (e.type) {
-        case 'focus': if (target.classList.contains('invalid'))
-            target.classList.remove('invalid');
+        case 'focus': removeClassInvalid(target);
             break;
         case 'blur':
             if ((target.name in validateRules) && validateRules[target.name](target)) target.classList.add('invalid');
             break;
         case 'change':
-            if ((target.name in validateRules) && validateRules[target.name](target)) target.classList.add('invalid');
+            if ((target.name in validateRules) && validateRules[target.name](target)) {
+                if (target.type == 'radio')
+                    target.parentNode.classList.add('invalid');
+                else
+                    target.classList.add('invalid');
+            }
+            else
+                removeClassInvalid(target);
             break;
         default: break;
     }
 
 }
+function removeClassInvalid(target) {
+    if (target.type == 'radio') removeClassInvalid(target.parentNode);
 
+    if (target.classList.contains('invalid'))
+        target.classList.remove('invalid');
+}
 
- for (const iterator of userForm.elements) {
+for (const iterator of userForm.elements) {
     if (iterator.type === "checkbox" || iterator.type === "radio") {
         iterator.addEventListener('change', validateInpute, false);
     }
@@ -96,4 +112,3 @@ function validateInpute(e) {
         iterator.addEventListener('focus', validateInpute, false);
     }
 }
- 
