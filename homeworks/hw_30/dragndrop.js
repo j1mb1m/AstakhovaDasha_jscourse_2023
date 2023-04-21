@@ -1,25 +1,13 @@
 "use strict";
+
 const solution = document.getElementById('solution');
 let arr_img = solution.getElementsByTagName('img');
+let wasClick = false;
 
 for (const iterator of arr_img) {
-    iterator.addEventListener('mousedown', mousedownSetPosition, false);
+    iterator.style.left = iterator.offsetLeft + 'px';
+    iterator.style.top = iterator.offsetTop + 'px';
     iterator.addEventListener('mousedown', mousedownHandler, false);
-}
-
-function mousedownSetPosition(e) {
-    e = e || window.event;
-
-    //в первой итерации установим позиции изображений
-    for (const iterator of arr_img) {
-        iterator.style.left = iterator.offsetLeft + 'px';
-        iterator.style.top = iterator.offsetTop + 'px';
-    }
-    //ставим абсолютное позиционирование, после того, как раздали координаты
-    for (const iterator of arr_img) {
-        iterator.style.position = 'absolute';
-        iterator.removeEventListener('mousedown', mousedownSetPosition, false);
-    }
 }
 
 function mousedownHandler(e) {
@@ -29,14 +17,19 @@ function mousedownHandler(e) {
     let shiftX = e.clientX - newNode.getBoundingClientRect().left;
     let shiftY = e.clientY - newNode.getBoundingClientRect().top;
 
-    newNode.style.zIndex = 100;
+    if (!wasClick) {
+        for (const iterator of arr_img) {
+            iterator.style.position = 'absolute';
+        }
+    }
+
     newNode.style.cursor = 'move';
 
-     newNode.ondragstart = function () {
+    newNode.ondragstart = function () {
         return false;
     };
 
-     document.body.append(newNode);  
+    document.body.append(newNode);
 
     moveAt(e.pageX, e.pageY);
 
