@@ -2,13 +2,19 @@
 
 const solution = document.getElementById('solution');
 let arr_img = solution.getElementsByTagName('img');
+let wasClick = false;
 
-for (const iterator of arr_img) {
+ for (const iterator of arr_img) {
     iterator.style.left = iterator.offsetLeft + 'px';
     iterator.style.top = iterator.offsetTop + 'px';
-    iterator.style.position = 'absolute';
     iterator.addEventListener('mousedown', mousedownHandler, false);
 }
+for (const iterator of arr_img) {
+    iterator.style.position = 'absolute'; //делаю в разных циклах, чтобы картинка была прижата по нижнему краю занимаемой области,
+    // иначе она будет выравнена по верхнему краю. Если не критично, то можно объединить в один цикл-проход 
+} 
+
+
 
 function mousedownHandler(e) {
     e = e || window.event;
@@ -16,6 +22,7 @@ function mousedownHandler(e) {
     let newNode = e.target;
     let shiftX = e.clientX - newNode.getBoundingClientRect().left;
     let shiftY = e.clientY - newNode.getBoundingClientRect().top;
+
 
     newNode.style.cursor = 'move';
 
