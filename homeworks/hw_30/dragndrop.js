@@ -3,25 +3,31 @@ const solution = document.getElementById('solution');
 let arr_img = solution.getElementsByTagName('img');
 
 for (const iterator of arr_img) {
+    iterator.style.left = iterator.offsetLeft + 'px';
+    iterator.style.top = iterator.offsetTop + 'px';
     iterator.addEventListener('mousedown', mousedownHandler, false);
+    iterator.addEventListener('mouseover', mouseoverHandler, false);
 }
 
+function mouseoverHandler(e) {
+    e = e || window.event;
+
+    for (const iterator of arr_img) {
+        iterator.style.position = 'absolute';
+        iterator.removeEventListener('mouseover', mouseoverHandler, false);
+    }
+}
 
 function mousedownHandler(e) {
     e = e || window.event;
     if (e.button !== 0) return;
-    const markerObj = e.target;
-    let shiftX = e.clientX - markerObj.getBoundingClientRect().left;
-    let shiftY = e.clientY - markerObj.getBoundingClientRect().top;
+    const newNode = e.target;
+    let shiftX = e.clientX - newNode.getBoundingClientRect().left;
+    let shiftY = e.clientY - newNode.getBoundingClientRect().top;
 
-    let newNode = markerObj;
-    if (markerObj.style.position !== 'absolute') {
-        newNode = markerObj.cloneNode(false);
-        markerObj.style.visibility = 'hidden';
-        newNode.style.zIndex = 100;
-        newNode.style.position = 'absolute';
-        newNode.style.cursor = 'pointer';
-    }
+    newNode.style.zIndex = 100;
+    newNode.style.position = 'absolute';
+    newNode.style.cursor = 'pointer';
 
     newNode.ondragstart = function () {
         return false;
@@ -45,7 +51,6 @@ function mousedownHandler(e) {
     newNode.onmouseup = function () {
         document.removeEventListener('mousemove', onMouseMove);
         newNode.onmouseup = null;
-        newNode.addEventListener('mousedown', mousedownHandler, false);
     };
 }
 
