@@ -2,11 +2,11 @@
 
 const solution = document.getElementById('solution');
 let arr_img = solution.getElementsByTagName('img');
-let wasClick = false;
 
 for (const iterator of arr_img) {
     iterator.style.left = iterator.offsetLeft + 'px';
     iterator.style.top = iterator.offsetTop + 'px';
+    iterator.style.position = 'absolute';
     iterator.addEventListener('mousedown', mousedownHandler, false);
 }
 
@@ -16,12 +16,6 @@ function mousedownHandler(e) {
     let newNode = e.target;
     let shiftX = e.clientX - newNode.getBoundingClientRect().left;
     let shiftY = e.clientY - newNode.getBoundingClientRect().top;
-
-    if (!wasClick) {
-        for (const iterator of arr_img) {
-            iterator.style.position = 'absolute';
-        }
-    }
 
     newNode.style.cursor = 'move';
 
