@@ -140,7 +140,7 @@ function moveAt(pageX, pageY) {
     switch (currentTarget) {
         case rightCenter:
             imgCat.style.width = (pageX - coord.x) + "px";
-            imgCat.style.left = coord.left + "px";
+            imgCat.style.left = coord.x + "px";
             break;
         case leftCenter:
             imgCat.style.width = (coord.x - pageX) + "px";
