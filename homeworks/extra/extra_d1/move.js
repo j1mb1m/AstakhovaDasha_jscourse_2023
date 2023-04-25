@@ -1,6 +1,5 @@
 "use strict";
 
-let panel = document.getElementById("imgCat");
 let imgCat = document.getElementById("imgCat");
 
 let leftTop = document.getElementById("leftTop");
@@ -26,33 +25,35 @@ let coord = {
 let currentTarget;
 
 function resize() {
-    leftTop.style.left = imgCat.offsetLeft - leftTop.offsetWidth / 2 + "px";
-    leftTop.style.top = imgCat.offsetTop - leftTop.offsetHeight / 2 + "px";
+    let bcr = imgCat.getBoundingClientRect();
 
-    middleTop.style.left = imgCat.offsetLeft + (imgCat.offsetWidth - middleTop.offsetWidth) / 2 + "px";
-    middleTop.style.top = imgCat.offsetTop - middleTop.offsetHeight / 2 + "px";
+    leftTop.style.left = bcr.left - leftTop.offsetWidth / 2 + "px";
+    leftTop.style.top = bcr.top - leftTop.offsetHeight / 2 + "px";
 
-    rightTop.style.left = imgCat.offsetLeft + imgCat.offsetWidth - rightTop.offsetWidth / 2 + "px";
-    rightTop.style.top = imgCat.offsetTop - rightTop.offsetHeight / 2 + "px";
+    middleTop.style.left = bcr.left + (bcr.width - middleTop.offsetWidth) / 2 + "px";
+    middleTop.style.top = bcr.top - middleTop.offsetHeight / 2 + "px";
 
-    leftCenter.style.left = imgCat.offsetLeft - leftCenter.offsetWidth / 2 + "px";
-    leftCenter.style.top = imgCat.offsetTop + (imgCat.offsetHeight - leftCenter.offsetHeight) / 2 + "px";
+    rightTop.style.left = bcr.left + bcr.width - rightTop.offsetWidth / 2 + "px";
+    rightTop.style.top = bcr.top - rightTop.offsetHeight / 2 + "px";
 
-    rightCenter.style.left = imgCat.offsetLeft + imgCat.offsetWidth - rightCenter.offsetWidth / 2 + "px";
-    rightCenter.style.top = imgCat.offsetTop + (imgCat.offsetHeight - rightCenter.offsetHeight) / 2 + "px";
+    leftCenter.style.left = bcr.left- leftCenter.offsetWidth / 2 + "px";
+    leftCenter.style.top = bcr.top + (bcr.height - leftCenter.offsetHeight) / 2 + "px";
 
-    leftDown.style.left = imgCat.offsetLeft - leftDown.offsetWidth / 2 + "px";
-    leftDown.style.top = imgCat.offsetTop + imgCat.offsetHeight - leftDown.offsetHeight / 2 + "px";
+    rightCenter.style.left = bcr.left+ bcr.width - rightCenter.offsetWidth / 2 + "px";
+    rightCenter.style.top = bcr.top + (bcr.height - rightCenter.offsetHeight) / 2 + "px";
 
-    middleDown.style.left = imgCat.offsetLeft + (imgCat.offsetWidth - middleDown.offsetWidth) / 2 + "px";
-    middleDown.style.top = imgCat.offsetTop + imgCat.offsetHeight - middleDown.offsetHeight / 2 + "px";
+    leftDown.style.left = bcr.left - leftDown.offsetWidth / 2 + "px";
+    leftDown.style.top = bcr.top + bcr.height - leftDown.offsetHeight / 2 + "px";
 
-    rightDown.style.left = imgCat.offsetLeft + imgCat.offsetWidth - rightDown.offsetWidth / 2 + "px";
-    rightDown.style.top = imgCat.offsetTop + imgCat.offsetHeight - rightDown.offsetHeight / 2 + "px";
+    middleDown.style.left = bcr.left + (bcr.width - middleDown.offsetWidth) / 2 + "px";
+    middleDown.style.top = bcr.top + bcr.height - middleDown.offsetHeight / 2 + "px";
+
+    rightDown.style.left = bcr.left + bcr.width - rightDown.offsetWidth / 2 + "px";
+    rightDown.style.top = bcr.top + bcr.height - rightDown.offsetHeight / 2 + "px";
 
 }
 
-function setBoundaries(e){    
+function setBoundaries(e) {
     let bcr = imgCat.getBoundingClientRect();
     sideRatio = (bcr.width === 0 ? 1 : bcr.height / bcr.width);
 
@@ -85,10 +86,10 @@ function setBoundaries(e){
             coord.x = bcr.left;
             coord.y = bcr.top;
             break;
-         case imgCat:
-                coord.x = e.clientX - bcr.left;;
-                coord.y = e.clientY - bcr.top;
-                break;
+        case imgCat:
+            coord.x = e.clientX - bcr.left;;
+            coord.y = e.clientY - bcr.top;
+            break;
     }
 }
 
