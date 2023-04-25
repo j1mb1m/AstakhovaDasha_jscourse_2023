@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../../../icon.png" sizes="16x16" type="image/png">
+    <title>SIZE-EDITOR</title>
+    <style>
+        * {
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        img {
+            width: 200px;
+            height: 113px;
+
+            position: absolute;
+            top: 100px;
+            left: 100px;
+            cursor: grab;
+
+            border: royalblue 1px solid;
+        }
+
+        div {
+            width: 10px;
+            height: 10px;
+            background-color: royalblue;
+            position: absolute;
+        }
+
+        #rightCenter,
+        #leftCenter {
+            cursor: ew-resize;
+        }
+
+        #middleTop,
+        #middleDown {
+            cursor: ns-resize;
+        }
+
+        #rightTop,
+        #leftDown {
+            cursor: nesw-resize;
+        }
+
+        #leftTop,
+        #rightDown {
+            cursor: nwse-resize;
+        }
+    </style>
+</head>
+
+<body>
+    <img src="img/cat.jpg" alt="cat" id="imgCat">
+    <div id="rightTop"></div>
+    <div id="middleTop"></div>
+    <div id="leftTop"></div>
+    <div id="rightCenter"></div>
+    <div id="leftCenter"></div>
+    <div id="rightDown"></div>
+    <div id="middleDown"></div>
+    <div id="leftDown"></div>
+    <script src="move.js"></script>
+</body>
+
+</html>
