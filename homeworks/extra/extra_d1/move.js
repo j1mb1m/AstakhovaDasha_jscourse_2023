@@ -13,8 +13,6 @@ let leftDown = document.getElementById("leftDown");
 let middleDown = document.getElementById("middleDown");
 let rightDown = document.getElementById("rightDown");
 
-let shiftX;
-let shiftY;
 let sideRatio;
 
 let coord = {
