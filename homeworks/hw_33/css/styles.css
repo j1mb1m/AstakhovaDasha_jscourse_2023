@@ -1,0 +1,70 @@
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    margin-bottom: 50px;
+}
+.center input {
+    text-align: center;
+    padding: 10px;
+    border: 1px rgba(255, 60, 0, 0.678) solid;
+    width: 150px;
+}
+.center div {
+    cursor: pointer;
+    border: 1px rgba(255, 60, 0, 0.678) solid;
+    padding: 10px;
+    width: 200px;
+    background-color: #fd886866;
+    text-align: center;
+}
+
+.dial {
+    width: 200px;
+    height: 200px;
+    position: relative;
+    background: #ee5;
+    border-radius: 50%;
+    margin: auto;
+    margin-bottom: 20px;
+}
+
+.currentTime {
+    position: relative;
+    width: 200px;
+    top: 30%;
+    text-align: center;
+    margin: auto;
+}
+
+.division {
+    position: absolute;
+    background: #3e5;
+    border-radius: 50%;
+    text-align: center;
+}
+
+.hourHand {
+    width: 10px;
+    position: absolute;
+    background: #000;
+    border-radius: 4px;
+    z-index: 100;
+}
+
+.minutesHand {
+    width: 6px;
+    position: absolute;
+    background: #000;
+    border-radius: 5px;
+    z-index: 90;
+}
+
+.secondsHand {
+    width: 2px;
+    position: absolute;
+    background: #000;
+    border-radius: 5px;
+    z-index: 80;
+}
