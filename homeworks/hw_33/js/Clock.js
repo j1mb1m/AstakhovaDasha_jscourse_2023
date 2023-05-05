@@ -19,29 +19,62 @@ class Clock {
         radiusDivision: 15, // радиус деления в которым храним значения делений от 1 до 12
     };
 
-    #shiftHand = 5; //сдвиг стрелок от центра вращения
+    //начальные размеры стрелки часов
+    #hourHandSize = {
+        width: 6,
+        height: 0.5 * this.#dialProperties.radius
+    }
+    //начальные размеры стрелки минут
+    #minuteHandSize = {
+        width: 4,
+        height: 0.7 * this.#dialProperties.radius
+    }
+    //начальные размеры стрелки секунд
+    #secondHandSize = {
+        width: 2,
+        height: 0.9 * this.#dialProperties.radius
+    }
+
+    #shiftHand = 6; //сдвиг стрелок от центра вращения
+    #fontSize = 20; // размер шрифта
 
     constructor(clockSize) {
         let radiusDial = clockSize / 2; //размер циферблата  
-        this.#sizeincreaseFactor = radiusDial / this.#dialProperties.radius;
+        let sizeincreaseFactor = radiusDial / this.#dialProperties.radius; //соотношение к базовым настройкам
+
+        this.#dialProperties.radius *= sizeincreaseFactor;
+        this.#dialProperties.radiusToDivision *= sizeincreaseFactor;
+        this.#dialProperties.radiusDivision *= sizeincreaseFactor;
+
+        this.#increaseSize(this.#hourHandSize, sizeincreaseFactor);
+        this.#increaseSize(this.#minuteHandSize, sizeincreaseFactor);
+        this.#increaseSize(this.#secondHandSize, sizeincreaseFactor);
+
+        this.#shiftHand *= sizeincreaseFactor;
+        this.#fontSize *= sizeincreaseFactor;
 
 
         this.create();
         this.run();
-        setInterval(this.run.bind(this), 200); //0.2сек, чтобы более менее синхронно работали часы
+        setInterval(this.run.bind(this), 1000); 
     };
+
+    #increaseSize(element, sizeincreaseFactor) {
+        element.width *= sizeincreaseFactor;
+        element.height *= sizeincreaseFactor;
+    }
 
     create() {
         this.#DIAL.appendChild(this.#CURRENTTIME);
         this.#CURRENTTIME.setAttribute("class", "currentTime");
-        this.#CURRENTTIME.style.setProperty("font-size", 20 * this.#sizeincreaseFactor + "px");
+        this.#CURRENTTIME.style.setProperty("font-size", this.#fontSize + "px");
 
         this.#DIAL.appendChild(this.#HOURHAND);
         this.#DIAL.appendChild(this.#MINUTEHAND);
         this.#DIAL.appendChild(this.#SECONDSHAND);
 
-        this.#DIAL.style.setProperty("width", this.#dialProperties.radius * 2 * this.#sizeincreaseFactor + "px");
-        this.#DIAL.style.setProperty("height", this.#dialProperties.radius * 2 * this.#sizeincreaseFactor + "px");
+        this.#DIAL.style.setProperty("width", this.#dialProperties.radius * 2 + "px");
+        this.#DIAL.style.setProperty("height", this.#dialProperties.radius * 2 + "px");
         this.#DIAL.setAttribute("class", "dial");
 
         let angleDegree = 2 * Math.PI / this.#hoursInDial; //угол
@@ -50,21 +83,21 @@ class Clock {
             const division = this.#DIAL.appendChild(document.createElement("div"));
             division.setAttribute("class", "division");
             division.innerText = (index === 0 ? this.#hoursInDial : index);
-            division.style.setProperty("width", this.#dialProperties.radiusDivision * 2 * this.#sizeincreaseFactor + "px");
-            division.style.setProperty("height", this.#dialProperties.radiusDivision * 2 * this.#sizeincreaseFactor + "px");
-            division.style.setProperty("line-height", this.#dialProperties.radiusDivision * 2 * this.#sizeincreaseFactor + "px");
-            division.style.setProperty("font-size", 20 * this.#sizeincreaseFactor + "px");
+            division.style.setProperty("width", this.#dialProperties.radiusDivision * 2 + "px");
+            division.style.setProperty("height", this.#dialProperties.radiusDivision * 2 + "px");
+            division.style.setProperty("line-height", this.#dialProperties.radiusDivision * 2 + "px");
+            division.style.setProperty("font-size", this.#fontSize + "px");
 
-            let x = this.#dialProperties.radiusToDivision * this.#sizeincreaseFactor * Math.cos(angleDegree * index - Math.PI / 2); //делаем со смещением на 90%=pi/2
-            let y = this.#dialProperties.radiusToDivision * this.#sizeincreaseFactor * Math.sin(angleDegree * index - Math.PI / 2);
+            let x = this.#dialProperties.radiusToDivision * Math.cos(angleDegree * index - Math.PI / 2); //делаем со смещением на 90%=pi/2
+            let y = this.#dialProperties.radiusToDivision * Math.sin(angleDegree * index - Math.PI / 2);
 
-            division.style.setProperty("left", (this.#dialProperties.radius - this.#dialProperties.radiusDivision) * this.#sizeincreaseFactor + x + "px");
-            division.style.setProperty("top", (this.#dialProperties.radius - this.#dialProperties.radiusDivision) * this.#sizeincreaseFactor + y + "px");
+            division.style.setProperty("left", (this.#dialProperties.radius - this.#dialProperties.radiusDivision) + x + "px");
+            division.style.setProperty("top", (this.#dialProperties.radius - this.#dialProperties.radiusDivision) + y + "px");
         }
 
-        this.#createHand(this.#HOURHAND, "hourHand", 6, 0.5);
-        this.#createHand(this.#MINUTEHAND, "minutesHand", 4, 0.7);
-        this.#createHand(this.#SECONDSHAND, "secondsHand", 2, 0.9);
+        this.#createHand(this.#HOURHAND, "hourHand", this.#hourHandSize);
+        this.#createHand(this.#MINUTEHAND, "minutesHand", this.#minuteHandSize);
+        this.#createHand(this.#SECONDSHAND, "secondsHand", this.#secondHandSize);
     }
 
     getDial() {
@@ -86,26 +119,19 @@ class Clock {
         this.#HOURHAND.style.setProperty("transform", "rotate(" + hrPosition + "deg)");
         this.#MINUTEHAND.style.setProperty("transform", "rotate(" + minPosition + "deg)");
         this.#SECONDSHAND.style.setProperty("transform", "rotate(" + secPosition + "deg)");
-        this.#CURRENTTIME.innerText = `${('0' + hr).slice(-2)}:${('0' + min).slice(-2)}:${('0' + sec).slice(-2)}`;
+        this.#CURRENTTIME.innerText = date.toLocaleTimeString();
+
+        console.log(date.toLocaleTimeString());
     }
 
-    /**
-    * Настраивает css-свойства для стрелок часов.
-    *
-    * @param {Object} element ссылка на элемент DOM стрелки
-    * @param {String} className название класса элемента.
-    * @param {Number} width, ширина элемента.
-    * @param {Number} factor, коэффициент, для получения высоты элемента от диаметра циферблата.
-    */
-    #createHand(element, className, width, factor) {
-        let hrWidth = width;   //ширина стрелки часов      
-        let hrHeight = this.#dialProperties.radius * this.#sizeincreaseFactor * factor;  //высота стрелки часов с коэффициентом factor от диаметра циферблата (коэффициент должен быть не более 1)
+
+    #createHand(element, className, size) {
         element.setAttribute("class", className);
-        element.style.setProperty("height", hrHeight + "px");
-        element.style.setProperty("width", hrWidth + "px");
-        element.style.setProperty("left", (this.#dialProperties.radius * this.#sizeincreaseFactor - hrWidth / 2) + "px");
-        element.style.setProperty("top", (this.#dialProperties.radius + this.#shiftHand) * this.#sizeincreaseFactor - hrHeight + "px"); //сдвиг от центра вниз 5px
-        element.style.setProperty("transform-origin", "center " + (hrHeight - this.#shiftHand * this.#sizeincreaseFactor) + "px");
+        element.style.setProperty("height", size.height + "px");
+        element.style.setProperty("width", size.width + "px");
+        element.style.setProperty("left", (this.#dialProperties.radius - size.width / 2) + "px");
+        element.style.setProperty("top", (this.#dialProperties.radius + this.#shiftHand) - size.height + "px"); //сдвиг от центра вниз 5px
+        element.style.setProperty("transform-origin", "center " + (size.height - this.#shiftHand) + "px");
     }
 
 }
