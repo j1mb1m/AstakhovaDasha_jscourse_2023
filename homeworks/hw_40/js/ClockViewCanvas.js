@@ -106,7 +106,7 @@ export class ClockViewCanvas {
         let ms = date.getMilliseconds();
 
         if (!this.#intervalId) {
-            this.#intervalId = setInterval(this.drawClock.bind(this), 1010 - ms);
+            this.#intervalId = setInterval(this.drawClock.bind(this), 1000 - ms);
         }
 
     }
