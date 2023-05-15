@@ -27,6 +27,7 @@ export default class Clock {
 
     #shiftHand = 6; // сдвиг стрелок от центра вращения
     #fontSize = 20; // размер шрифта
+    #isRun = false;
 
     constructor(clockSize) {
         let radiusDial = clockSize / 2; //размер циферблата  
@@ -94,5 +95,14 @@ export default class Clock {
 
     getFontSize() {
         return this.#fontSize;
+    }
+    run() {
+        this.#isRun = true;
+    }
+    stop() {        
+        this.#isRun = false;
+    }
+    isRun() {
+        return this.#isRun;
     }
 }

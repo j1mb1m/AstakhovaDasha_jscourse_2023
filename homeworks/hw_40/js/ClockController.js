@@ -15,18 +15,17 @@ function createClock() {
     let clockViewDOM = new ClockViewDOM(clock);
     let clockViewCanvas = new ClockViewCanvas(clock);
 
-    pos.appendChild(clockViewSVG.show());
-    pos.appendChild(clockViewDOM.show());
+    /*     pos.appendChild(clockViewSVG.show());
+        pos.appendChild(clockViewDOM.show()); */
     pos.appendChild(clockViewCanvas.show());
 
-    clockViewSVG.run();
-    clockViewDOM.run();
+    /*     clockViewSVG.run();
+        clockViewDOM.run(); */
     clockViewCanvas.run();
 
     /*     clockViewSVG.stop();
-        clockViewDOM.stop();  */
-
-
+        clockViewDOM.stop();  
+        clockViewCanvas.stop();*/
 }
 
 

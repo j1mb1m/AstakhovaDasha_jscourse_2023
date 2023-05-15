@@ -100,20 +100,22 @@ export class ClockViewCanvas {
         ctx.fill();
 
     }
+    #reDrow() {
+        if (!this.model.isRun()) return;
 
-    run() {
+        this.drawClock();
         let date = new Date();
         let ms = date.getMilliseconds();
+        setTimeout(this.#reDrow.bind(this), 1010 - ms);
+    }
 
-        if (!this.#intervalId) {
-            this.#intervalId = setInterval(this.drawClock.bind(this), 1000 - ms);
-        }
-
+    run() {
+        this.model.run();
+        this.#reDrow();
     }
 
     stop() {
-        clearInterval(this.#intervalId);
-        this.#intervalId = null;
+        this.model.stop();
     }
 
 }
