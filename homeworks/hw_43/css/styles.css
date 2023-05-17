@@ -1,0 +1,44 @@
+#solution1 {
+    margin: auto;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    margin-bottom: 50px;
+}
+
+.center input {
+    text-align: center;
+    padding: 10px;
+    border: 1px rgba(255, 60, 0, 0.678) solid;
+    width: 150px;
+}
+
+.center div {
+    cursor: pointer;
+    border: 1px rgba(255, 60, 0, 0.678) solid;
+    padding: 10px;
+    width: 200px;
+    background-color: #fd886866;
+    text-align: center;
+}
+
+.game-field {
+    position: relative;
+    background-color: yellow;
+    margin: auto;
+    transform: translateZ(0);
+}
+
+.game-score {
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+}
+.game-racket{
+     transition-duration: 16ms; 
+    transition-timing-function: linear; 
+}
