@@ -1,13 +1,11 @@
 export class GameSounds {
 
     constructor() {
-        this.hitAudio = new Audio('//cd.textfiles.com/midiwavworkshop/WAV/SERVE.WAV');
-        this.failAudio = new Audio('//www.chiptape.com/chiptape/sounds/medium/countdown.wav');
+        this.hitAudio = new Audio('./sounds/hit.wav');
+        this.failAudio = new Audio('./sounds/fail.wav');
     }
 
     start() {
-/*         this.hitAudio.play().then(() => { this.hitAudio.pause() });
-        this.failAudio.play().then(() => { this.failAudio.pause() }); */
         this.hitAudio.pause();
         this.failAudio.pause();
     }
