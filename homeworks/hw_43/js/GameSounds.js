@@ -1,8 +1,8 @@
 export class GameSounds {
 
     constructor() {
-        this.hitAudio = new Audio('http://cd.textfiles.com/midiwavworkshop/WAV/SERVE.WAV');
-        this.failAudio = new Audio('http://www.chiptape.com/chiptape/sounds/medium/countdown.wav');
+        this.hitAudio = new Audio('//cd.textfiles.com/midiwavworkshop/WAV/SERVE.WAV');
+        this.failAudio = new Audio('//www.chiptape.com/chiptape/sounds/medium/countdown.wav');
     }
 
     start() {
