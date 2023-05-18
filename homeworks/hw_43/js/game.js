@@ -7,6 +7,7 @@ import { GAME_STATUS } from "./enums/gameStatus.js";
 import { GameSounds } from "./GameSounds.js";
 import { GameViewDOM } from "./GameViewDOM.js";
 import { GameViewCanvas } from "./GameViewCanvas.js";
+import { GameViewSVG } from "./GameViewSVG.js";
 
 const pos = document.getElementById("solution1");
 const btnOK = document.getElementById('btnOK');
@@ -35,7 +36,7 @@ function init() {
     else if (selectView.value === 'Canvas')
         gameView = new GameViewCanvas(gameField, rightRacket, leftRacket, ball); //создаем viewer
     else
-        gameView = new GameViewCanvas(gameField, rightRacket, leftRacket, ball); //создаем viewer
+        gameView = new GameViewSVG(gameField, rightRacket, leftRacket, ball); //создаем viewer
 
     //удаляем все   
     while (pos.hasChildNodes()) {
