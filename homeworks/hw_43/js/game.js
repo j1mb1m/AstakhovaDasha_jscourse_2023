@@ -27,6 +27,9 @@ let gameView;
 const MAX_WINS = 3;
 let gameStatus = GAME_STATUS.STOP;
 
+const framePerSecond = 50;
+setInterval(render, 1000/framePerSecond);
+
 
 function init() {
 
@@ -64,7 +67,6 @@ function run() {
     // начинаем игру
     gameStatus = GAME_STATUS.RUN;
     ball.resetPosition();
-    render();
 }
 
 function reset() {
@@ -83,14 +85,19 @@ function reset() {
 }
 
 function render() {
+
     //логика по движению мяча и ракеток
     if (gameStatus != GAME_STATUS.RUN) {
-        //повторяем логику
-        requestAnimationFrame(render);
         return;
     }
-    
-    ball.move();
+    if (!gameView) {
+        return;
+    }
+   
+    //продолжаем игру
+    ball.move(); 
+    rightRacket.move();
+    leftRacket.move();
 
     let currentPlayer = ball.x + ball.r > gameField.width / 2 ? rightRacket : leftRacket;
     let direction = ball.x + ball.r < gameField.width / 2 ? 1 : -1;
@@ -107,18 +114,10 @@ function render() {
         winner.increaseScore();
         gameStatus = GAME_STATUS.PAUSE;
         gameView.updateUI();
-        return;
     }
-
-    //продолжаем игру
-    rightRacket.move();
-    leftRacket.move();
     //обновляем DOM 
     gameView.update();
 
-
-    //повторяем логику
-    requestAnimationFrame(render);
 }
 
 document.addEventListener('keydown', function (event) {
@@ -144,3 +143,4 @@ document.addEventListener('keyup', function (event) {
         default: break;
     }
 });
+

@@ -13,9 +13,9 @@ export class Ball {
     }
 
     reset() {
-        this.velocityX = 2;
-        this.velocityY = Math.floor(Math.random() * 6) - 3;
-        this.speed = 3;
+        this.velocityX = 5;
+        this.velocityY = Math.floor(Math.random() * 10) - 5;
+        this.speed = 5;
 
         this.acceleration = 0.1;
         this.resetPosition();
