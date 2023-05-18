@@ -30,7 +30,7 @@ let gameStatus = GAME_STATUS.STOP;
 
 function init() {
 
-    const selectView = document.getElementById('selectView');    
+    const selectView = document.getElementById('selectView');
     if (selectView.value === 'DOM')
         gameView = new GameViewDOM(gameField, rightRacket, leftRacket, ball);
     else if (selectView.value === 'Canvas')
@@ -43,10 +43,9 @@ function init() {
         pos.removeChild(pos.lastChild);
     }
 
-    const btnStart =  gameView.drawBtnStart(pos);
+    const btnStart = gameView.drawBtnStart(pos);
     btnStart.addEventListener('click', run);
     reset(); // сбрасываем настройки
-
     gameView.drawPlayingField(pos); // отображаем в DOM
 
 }
@@ -85,7 +84,12 @@ function reset() {
 
 function render() {
     //логика по движению мяча и ракеток
-
+    if (gameStatus != GAME_STATUS.RUN) {
+        //повторяем логику
+        requestAnimationFrame(render);
+        return;
+    }
+    
     ball.move();
 
     let currentPlayer = ball.x + ball.r > gameField.width / 2 ? rightRacket : leftRacket;
@@ -112,9 +116,9 @@ function render() {
     //обновляем DOM 
     gameView.update();
 
+
     //повторяем логику
-    if (gameStatus === GAME_STATUS.RUN)
-        requestAnimationFrame(render);
+    requestAnimationFrame(render);
 }
 
 document.addEventListener('keydown', function (event) {
