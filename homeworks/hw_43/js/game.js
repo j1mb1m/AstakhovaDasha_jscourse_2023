@@ -5,11 +5,12 @@ import { DIRECTION } from "./enums/direction.js";
 import { Ball } from "./Ball.js";
 import { GAME_STATUS } from "./enums/gameStatus.js";
 import { GameSounds } from "./GameSounds.js";
-import { GameViewDOM } from "../GameViewDOM.js";
+import { GameViewDOM } from "./GameViewDOM.js";
+import { GameViewCanvas } from "./GameViewCanvas.js";
 
 const pos = document.getElementById("solution1");
-const btn = document.getElementById('showBtn');
-btn.addEventListener('click', run);
+const btnOK = document.getElementById('btnOK');
+btnOK.addEventListener('click', init);
 
 const gameField = {
     width: 600,
@@ -25,10 +26,26 @@ let gameView;
 const MAX_WINS = 3;
 let gameStatus = GAME_STATUS.STOP;
 
+
 function init() {
 
+    const selectView = document.getElementById('selectView');    
+    if (selectView.value === 'DOM')
+        gameView = new GameViewDOM(gameField, rightRacket, leftRacket, ball);
+    else if (selectView.value === 'Canvas')
+        gameView = new GameViewCanvas(gameField, rightRacket, leftRacket, ball); //создаем viewer
+    else
+        gameView = new GameViewCanvas(gameField, rightRacket, leftRacket, ball); //создаем viewer
+
+    //удаляем все   
+    while (pos.hasChildNodes()) {
+        pos.removeChild(pos.lastChild);
+    }
+
+    const btnStart =  gameView.drawBtnStart(pos);
+    btnStart.addEventListener('click', run);
     reset(); // сбрасываем настройки
-    gameView = new GameViewDOM(gameField, rightRacket, leftRacket, ball); //создаем viewer
+
     gameView.drawPlayingField(pos); // отображаем в DOM
 
 }
@@ -78,10 +95,8 @@ function render() {
         audio.soundHit();
         currentPlayer.hitBall(ball, direction);
     }
-
     // мяч за пределами?
-    let isStopped = ball.isBallOutside();
-    if (isStopped) {
+    else if (ball.isBallOutside()) {
         audio.soundFail();
         let winner = ball.x + ball.r > gameField.width / 2 ? leftRacket : rightRacket;
         winner.increaseScore();
@@ -124,5 +139,3 @@ document.addEventListener('keyup', function (event) {
         default: break;
     }
 });
-
-window.onload = init();

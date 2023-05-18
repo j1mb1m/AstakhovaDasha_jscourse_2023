@@ -6,8 +6,10 @@ export class GameSounds {
     }
 
     start() {
-        this.hitAudio.play().then(() => { this.hitAudio.pause() });
-        this.failAudio.play().then(() => { this.failAudio.pause() });
+/*         this.hitAudio.play().then(() => { this.hitAudio.pause() });
+        this.failAudio.play().then(() => { this.failAudio.pause() }); */
+        this.hitAudio.pause();
+        this.failAudio.pause();
     }
 
     soundHit() {

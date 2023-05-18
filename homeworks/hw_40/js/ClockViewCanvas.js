@@ -1,7 +1,6 @@
 export class ClockViewCanvas {
 
     //от центра циферблата до центра деления
-    #intervalId = null;
     #canvas = document.createElement("canvas");
 
     constructor(model) {
