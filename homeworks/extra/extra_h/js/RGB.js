@@ -1,21 +1,23 @@
 export class RGB {
-    constructor(r = 0, g = 0, b = 0, a = 1) {
+    constructor(r = 0, g = 0, b = 0, a = 255, k = 1) {
         this.r = r;
         this.g = g;
         this.b = b;
         this.a = a;
+        this.k = k; //коэф сглаживания
     }
 
-    isBlack() {
-        return (this.r === 0 && this.g === 0 && this.b === 0);
-    }
     isMatch(color) {
-        return (this.r === color.r && this.g === color.g && this.b === color.b);
+        return (this.r === Math.floor(color.r * this.k)
+            && this.g === Math.floor(color.g * this.k)
+            && this.b === Math.floor(color.b * this.k));
     }
-    setColor(color) {
-        this.r = color.r;
-        this.g = color.g;
-        this.b = color.b;
+
+    setColor(color, k) {
+        this.r = Math.floor(color.r * k);
+        this.g = Math.floor(color.g * k);
+        this.b = Math.floor(color.b * k);
+        this.k = k;
     }
 
 

@@ -5,8 +5,8 @@ import { RGB } from "./RGB.js";
 const canvas = document.getElementById('canvas1');
 const context = canvas.getContext("2d", { willReadFrequently: true });
 
-const MAX_BLACK_COLOR = 80; // из диапазона [0..255], где 0 - черный, 255 - белый
-const MIN_WHITE_COLOR = 200;// из диапазона [0..255], где 0 - черный, 255 - белый
+const MAX_BLACK_COLOR = 44; // из диапазона [0..255], где 0 - черный, 255 - белый
+const MIN_WHITE_COLOR = 240;// из диапазона [0..255], где 0 - черный, 255 - белый
 
 let originImg = []; //храним исходное изображение
 
@@ -25,8 +25,7 @@ function start() {
 
         let imageData = context.getImageData(0, 0, width, height);
         originImg = convertFrom1DTo2DArray(imageData.data, width, height);
-        highlightBorders(originImg); //возможно где-то здесь надо бы сделать не таблицу RGB, 
-        //а таблицу процентов содержания черного цвета, чтобы закрашивать с примесью
+        highlightBorders(originImg); 
     }
 }
 
@@ -36,15 +35,20 @@ function highlightBorders(data) {
 
     for (let i = 0; i < data.length; i++) {
         for (let j = 0; j < data[i].length; j++) {
+            if (data[i][j].a < 255) {
+                debugger;
+            } 
             if (data[i][j].r === data[i][j].g && data[i][j].r === data[i][j].b) {
                 if (data[i][j].r <= MAX_BLACK_COLOR) {
-                    data[i][j] = new RGB(0, 0, 0, 1);
+                    data[i][j] = new RGB(0, 0, 0, 255);
                 }
                 else if (data[i][j].r >= MIN_WHITE_COLOR) {
-                    data[i][j] = new RGB(255, 255, 255, 1);
+                    data[i][j] = new RGB(255, 255, 255, 255);
                 }
-                else { }
+                else  data[i][j].k = data[i][j].r/255;
+
             }
+
         }
     }
 }
@@ -72,7 +76,7 @@ function pick(event) {
     let x = (event.pageX - canvas.offsetLeft);
     let y = (event.pageY - canvas.offsetTop);
 
-    let bcolor = originImg[y][x];//getPixelColor(x, y);
+    let bcolor = originImg[y][x];
 
     let cur_color_D = document.getElementById('color');
     let cur_color = RGB.convertFromHex(cur_color_D.value);
@@ -104,7 +108,7 @@ function pick(event) {
         let leftCheck = false;
         for (let i = y; i < height; i++) {
             //проверим позицию слева и если не закращена, то поместим в стек для следующего прохода
-            if (x > 0 && !arr[i][x - 1].isMatch(cur_color) && !arr[i][x - 1].isMatch(cur_color)) {
+            if (x > 0 && !arr[i][x - 1].isMatch(cur_color)) {
                 if (rightCheck === false && originImg[i][x - 1].isMatch(bcolor)) {
                     stack.push([x - 1, i]);
                     rightCheck = true;
@@ -114,7 +118,7 @@ function pick(event) {
                 }
             }
             //проверим позицию справа и если не закращена, то поместим в стек для следующего прохода
-            if (x < width - 1 && !arr[i][x + 1].isMatch(cur_color) && !arr[i][x + 1].isMatch(cur_color)) {
+            if (x < width - 1 && !arr[i][x + 1].isMatch(cur_color)) {
                 if (leftCheck === false && originImg[i][x + 1].isMatch(bcolor)) {
                     stack.push([x + 1, i]);
                     leftCheck = true;
@@ -126,7 +130,7 @@ function pick(event) {
             if (!originImg[i][x].isMatch(bcolor)) {
                 break;
             }
-            arr[i][x].setColor(cur_color);
+            arr[i][x].setColor(cur_color, originImg[i][x].k); //установим цвет с учетом сглаживания
         }
 
     }
