@@ -30,7 +30,7 @@ function getInfo(db) {
 
 function deleteItem(db) {
     let drinkName = inputName();
-    let state = db.deleteDrink(drinkName);
+    let state = db.deleteValue(drinkName);
 
     alert(state ? "информация успешно удалена" : "невозможно удалить, возможно вы указали не существующую позицию");
 }
