@@ -5,7 +5,7 @@ import { RGB } from "./RGB.js";
 const canvas = document.getElementById('canvas1');
 const context = canvas.getContext("2d", { willReadFrequently: true });
 
-const MAX_BLACK_COLOR = 44; // из диапазона [0..255], где 0 - черный, 255 - белый
+const MAX_BLACK_COLOR = 82; // из диапазона [0..255], где 0 - черный, 255 - белый
 const MIN_WHITE_COLOR = 240;// из диапазона [0..255], где 0 - черный, 255 - белый
 
 let originImg = []; //храним исходное изображение
