@@ -1,9 +1,9 @@
 export class RGB {
     constructor(r = 0, g = 0, b = 0, a = 255, k = 1) {
-        this.r = r;
-        this.g = g;
-        this.b = b;
-        this.a = a;
+        this.r = Number(r);
+        this.g = Number(g);
+        this.b = Number(b);
+        this.a = Number(a);
         this.k = k; //коэф сглаживания
     }
 
@@ -20,6 +20,22 @@ export class RGB {
         this.k = k;
     }
 
+
+    static rgbToObj(rgbString) {
+
+        let colorArr = rgbString.slice(
+            rgbString.indexOf("(") + 1,
+            rgbString.indexOf(")")
+        ).split(", ");
+
+        let obj = new RGB(...colorArr);
+
+ /*        colorArr.forEach((k, i) => {
+            obj[i] = k;
+        }) */
+
+        return obj;
+    }
 
     static convertFromHex(hex) {
         let result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
