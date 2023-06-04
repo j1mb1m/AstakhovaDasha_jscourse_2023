@@ -6,6 +6,12 @@
 
 body {
     background-color: rgb(54, 31, 49);
+    background-image: url(../images/bg.jpeg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100vw;
+    height: 100vh;
 }
 
 #fill {
@@ -14,7 +20,7 @@ body {
 
 #pencil {
     background-image: url(../images/icons/i_pencil.png);
-} 
+}
 
 #save {
     background-image: url(../images/icons/save.png);
@@ -26,6 +32,15 @@ body {
 
 #undo {
     background-image: url(../images/icons/undo.png);
+}
+
+.some_field {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: max-content;
+    border-radius: 50%
 }
 
 .main {
@@ -43,7 +58,8 @@ canvas {
     height: 100%;
     transform: translateZ(0);
 }
-.background{
+
+.background {
     display: none;
 }
 
@@ -53,33 +69,37 @@ canvas {
     display: block;
     max-width: 1060px;
     background-color: #e5dede;
-    margin-top: 10px;
 }
+
 .palette-commands {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: center;
+    gap: 10px;
     padding-bottom: 10px;
     padding-top: 10px;
 }
- .palette-commands div {
+
+.palette-commands div {
     background-color: #e5dede;
     background-size: contain;
-    width: 80px;
-    height: 80px;
+    width: 40px;
+    height: 40px;
     margin: 5px;
     cursor: pointer;
 }
- .palette-commands div:hover{
-    background-color:  white;
+
+.palette-commands div:hover {
+    background-color: white;
     box-shadow: 0px 0px 3px 2px rgba(34, 60, 80, 0.2);
     transform: scale(1.1);
     border-radius: 7px;
     transition: 0.5s;
 }
- 
-.palette-commands .activ, .palette-commands .activ:hover {
-    background-color:  rgba(250, 90, 90, 0.308);
+
+.palette-commands .activ,
+.palette-commands .activ:hover {
+    background-color: rgba(250, 90, 90, 0.308);
     box-shadow: 0px 0px 3px 2px rgba(34, 60, 80, 0.2);
     transform: scale(1.1);
     border-radius: 7px;
@@ -117,7 +137,8 @@ canvas {
 
 @media (max-width: 1100px) {
 
-    .main, #palette {
+    .main,
+    #palette {
         max-width: 800px;
         width: 100%;
     }
@@ -126,7 +147,14 @@ canvas {
 
 @media (max-width: 825px) {
 
-    .main, #palette {
+    .some_field{
+        top: 0;
+        left: 0;
+        transform: translate(0);
+        width: 100%;
+    }
+    .main,
+    #palette {
         display: block;
         margin: auto;
     }
@@ -156,6 +184,7 @@ canvas {
         width: 22px;
         height: 22px;
     }
+
     .palette-commands div {
         background-size: contain;
         width: 40px;
@@ -172,6 +201,7 @@ canvas {
     }
 
 }
+
 @media (max-width: 350px) {
 
     .colors,
