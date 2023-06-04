@@ -8,20 +8,19 @@ body {
     background-color: rgb(54, 31, 49);
 }
 
-
 #fill {
     background-image: url(../images/icons/i_backet.png);
 }
 
 #pencil {
     background-image: url(../images/icons/i_pencil.png);
-}
+} 
 
 #save {
     background-image: url(../images/icons/save.png);
 }
 
-#trash {
+#clear {
     background-image: url(../images/icons/trash.png);
 }
 
@@ -44,6 +43,9 @@ canvas {
     height: 100%;
     transform: translateZ(0);
 }
+.background{
+    display: none;
+}
 
 #palette {
     margin-left: auto;
@@ -58,20 +60,29 @@ canvas {
     flex-wrap: wrap;
     justify-content: space-around;
     padding-bottom: 10px;
+    padding-top: 10px;
 }
-.palette-commands div {
+ .palette-commands div {
     background-color: #e5dede;
     background-size: contain;
     width: 80px;
     height: 80px;
     margin: 5px;
 }
-.palette-commands div:hover {
+ .palette-commands div:hover{
     background-color:  white;
     box-shadow: 0px 0px 3px 2px rgba(34, 60, 80, 0.2);
-    transform: scale(1.3);
+    transform: scale(1.1);
     border-radius: 7px;
 }
+ 
+.palette-commands .activ {
+    background-color:  white;
+    box-shadow: 0px 0px 3px 2px rgba(34, 60, 80, 0.2);
+    transform: scale(1.1);
+    border-radius: 7px;
+}
+
 .colors {
     margin: 10px;
 }

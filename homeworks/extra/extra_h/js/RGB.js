@@ -30,10 +30,6 @@ export class RGB {
 
         let obj = new RGB(...colorArr);
 
- /*        colorArr.forEach((k, i) => {
-            obj[i] = k;
-        }) */
-
         return obj;
     }
 
