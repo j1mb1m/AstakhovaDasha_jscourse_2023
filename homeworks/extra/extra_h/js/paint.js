@@ -56,6 +56,7 @@ function fill(event) {
 }
 
 function pensilStart(event) {
+    let coord;
     event = event || window.e;
     event.preventDefault();
     event.stopPropagation();
@@ -63,24 +64,24 @@ function pensilStart(event) {
     canvas.addEventListener('touchmove', pensilMove);
 
     if (event.type === 'touchstart') {
-        let coord = getCurrentСoordinates(event.touches[0].clientX, event.touches[0].clientY);
-        albumView.lineStart(coord);
+        let coord = getCurrentСoordinates(event.touches[0].pageX, event.touches[0].pageY);
     }
     else {
         let coord = getCurrentСoordinates(event.pageX, event.pageY);
-        albumView.lineStart(coord);
     }
+    albumView.lineStart(coord);
 }
 
 function pensilMove(event) {
+    let coord;
+    
     if (event.type === 'touchmove') {
-        let coord = getCurrentСoordinates(event.touches[0].clientX, event.touches[0].clientY);
-        albumView.lineStart(coord);
+        coord = getCurrentСoordinates(event.touches[0].pageX, event.touches[0].pageY);
     }
     else {
-        let coord = getCurrentСoordinates(event.pageX, event.pageY);
-        albumView.lineStart(coord);
+        coord = getCurrentСoordinates(event.pageX, event.pageY);
     }
+    albumView.lineMove(coord);
 }
 
 function pensilEnd() {

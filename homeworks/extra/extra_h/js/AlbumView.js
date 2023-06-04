@@ -55,9 +55,9 @@ export class AlbumView {
         this.ctxBackground.lineWidth = this.album.lineSize;
         this.ctxBackground.beginPath();
         this.ctxBackground.moveTo(coord.x, coord.y);
-        this.ctxBackground.lineTo(coord.x, coord.y);
-        this.ctxBackground.stroke();
-        this.album.redraw(coord.x, coord.y, this.ctxBackground.getImageData(0, 0, this.canvasBackground.width, this.canvasBackground.height));
+     /*   this.ctxBackground.lineTo(coord.x, coord.y);
+         this.ctxBackground.stroke(); 
+        this.album.redraw(coord.x, coord.y, this.ctxBackground.getImageData(0, 0, this.canvasBackground.width, this.canvasBackground.height));*/
     }
 
     lineMove(coord) {
