@@ -60,17 +60,32 @@ function pensilStart(event) {
     event.preventDefault();
     event.stopPropagation();
     canvas.addEventListener('mousemove', pensilMove);
-    let coord = getCurrentСoordinates(event.pageX, event.pageY);
-    albumView.lineStart(coord);
+    canvas.addEventListener('touchmove', pensilMove);
+
+    if (event.type === 'touchstart') {
+        let coord = getCurrentСoordinates(event.touches[0].clientX, event.touches[0].clientY);
+        albumView.lineStart(coord);
+    }
+    else {
+        let coord = getCurrentСoordinates(event.pageX, event.pageY);
+        albumView.lineStart(coord);
+    }
 }
 
 function pensilMove(event) {
-    let coord = getCurrentСoordinates(event.pageX, event.pageY);
-    albumView.lineMove(coord);
+    if (event.type === 'touchmove') {
+        let coord = getCurrentСoordinates(event.touches[0].clientX, event.touches[0].clientY);
+        albumView.lineStart(coord);
+    }
+    else {
+        let coord = getCurrentСoordinates(event.pageX, event.pageY);
+        albumView.lineStart(coord);
+    }
 }
 
 function pensilEnd() {
     canvas.removeEventListener("mousemove", pensilMove);
+    canvas.removeEventListener("touchmove", pensilMove);
     album.saveAction();
     albumView.lineEnd();
 }
@@ -102,6 +117,9 @@ function fillImage(event) {
 
     canvas.addEventListener('mouseup', fill);
     canvas.removeEventListener('mousedown', pensilStart);
+
+    canvas.removeEventListener('touchstart', pensilStart);
+    canvas.removeEventListener('touchend', pensilEnd);
 }
 
 function drawByPencilImage(event) {
@@ -119,6 +137,9 @@ function drawByPencilImage(event) {
     canvas.removeEventListener('mouseup', fill);
     canvas.addEventListener('mousedown', pensilStart);
     canvas.addEventListener('mouseup', pensilEnd);
+
+    canvas.addEventListener('touchstart', pensilStart);
+    canvas.addEventListener('touchend', pensilEnd);
 }
 
 function clearImage(event) {

@@ -70,7 +70,7 @@ export class AlbumView {
     }
 
     lineEnd() {
-        this.ctxBackground.beginPath();
+        this.ctxBackground.closePath();
         this.ctxBackground.fillStyle = 'rgb(0,0,0)';
         this.ctxBackground.fillRect(0, 0, this.canvasBackground.width, this.canvasBackground.height);
     }
