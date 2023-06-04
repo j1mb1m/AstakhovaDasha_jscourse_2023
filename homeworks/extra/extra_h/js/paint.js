@@ -19,7 +19,6 @@ function start() {
     album.start(albumView);
     albumView.start(album);
     albumSound.start();
-    albumSound.play();
     const colorsDiv = document.getElementById('colors1');
 
     colors.forEach(group => {
@@ -145,6 +144,16 @@ function saveImage(event) {
 
 }
 
+function musicOnOff(event) {
+    event.stopPropagation();
+    event.preventDefault();
+    if (albumSound.playFoneMusic)
+        albumSound.stop();
+    else
+        albumSound.play();
+}
+
+
 const fillBtn = document.getElementById('fill');
 fillBtn.addEventListener('click', fillImage);
 
@@ -160,6 +169,8 @@ undoBtn.addEventListener('click', undoImage);
 const saveBtn = document.getElementById('save');
 saveBtn.addEventListener('click', saveImage);
 
+const musicBtn = document.getElementById('music');
+musicBtn.addEventListener('click', musicOnOff);
 
 /* fillBtn.addEventListener("mouseenter", function(event) {
   let sound = document.getElementById("Sound");
