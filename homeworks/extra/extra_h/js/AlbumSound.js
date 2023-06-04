@@ -3,7 +3,7 @@ export class AlbumSound{
     constructor() {
         this.fone = new Audio('./sounds/fone.mp3');
         this.fone.loop = true;
-        this.buttonClick = new Audio('./sounds/click.wav');
+        this.buttonClick = new Audio('./sounds/game_click.wav');
     }
 
     start() {
