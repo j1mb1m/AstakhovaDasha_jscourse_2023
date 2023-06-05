@@ -74,7 +74,7 @@ function pensilStart(event) {
 
 function pensilMove(event) {
     let coord;
-    
+
     if (event.type === 'touchmove') {
         coord = getCurrentСoordinates(event.touches[0].pageX, event.touches[0].pageY);
     }
@@ -94,6 +94,8 @@ function pensilEnd() {
 function chooseColor(event) {
     event.stopPropagation();
     event.preventDefault();
+
+    albumSound.click();
     if (currentColorDiv)
         currentColorDiv.classList.remove('activ');
 
