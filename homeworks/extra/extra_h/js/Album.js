@@ -16,7 +16,7 @@ export class Album {
         this.width = 0;
         this.height = 0;
         this.imageData = Array(0);
-        this.color = 'rgb(255,255,255)';
+        this.color = new RGB(255, 255, 255);
         this.lineSize = 10;
 
     }
@@ -59,7 +59,7 @@ export class Album {
         let sY = Math.max(0, y - shiftY);
         let eY = Math.min(this.height, y + shiftY);
 
-        let cur_color = RGB.rgbToObj(this.color);
+        let cur_color = this.color;
         for (let i = sX; i < eX; i++) {
             for (let j = sY; j < eY; j++) {
                 let pos = (j * this.width + i) * 4;
@@ -67,6 +67,10 @@ export class Album {
                     this.imageData.data[pos] = cur_color.r * this.originImg[j][i].k;
                     this.imageData.data[pos + 1] = cur_color.g * this.originImg[j][i].k;
                     this.imageData.data[pos + 2] = cur_color.b * this.originImg[j][i].k;
+                    if (this.originImg[j][i].k != 1) {
+                        /*                 debugger  */
+                        console.log(this.originImg[j][i]);
+                    }
                 }
             }
         }
@@ -79,11 +83,13 @@ export class Album {
         this.restore.push(Array.from(this.imageData.data));
     }
 
+
     fill(x, y) {
 
         if (this.boundary[y][x]) return;
 
-        let cur_color = RGB.rgbToObj(this.color);
+        let cur_color = this.color;
+
         let data = this.imageData.data;
 
         let arr = this.#convertFrom1DTo2DArray(data, this.width, this.height);
@@ -134,7 +140,6 @@ export class Album {
 
         }
         this.#colorize(arr, data);
-        this.restore.push(Array.from(data));
         this.update();
 
     }
@@ -144,14 +149,14 @@ export class Album {
             for (let j = 0; j < this.height; j++) {
                 let pos = (j * this.width + i) * 4;
                 if (this.imageData.data[pos] != this.imageData.data[pos + 1] != this.imageData.data[pos + 2]) {
-                    this.imageData.data[pos] = 255 * this.originImg[j][i].k;
-                    this.imageData.data[pos + 1] = 255 * this.originImg[j][i].k;
-                    this.imageData.data[pos + 2] = 255 * this.originImg[j][i].k;
+                    this.imageData.data[pos] = this.originImg[j][i].r;
+                    this.imageData.data[pos + 1] = this.originImg[j][i].g;
+                    this.imageData.data[pos + 2] = this.originImg[j][i].b;
                 }
             }
         }
         this.restore = Array();
-        this.restore.push(Array.from(this.imageData.data)); 
+        this.restore.push(Array.from(this.imageData.data));
         this.update();
     }
 
@@ -172,6 +177,11 @@ export class Album {
         this.update();
     }
 
+    getBGColor(x, y) {
+        let pos = (y * this.width + x) * 4;
+        return new RGB(this.imageData.data[pos], this.imageData.data[pos + 1], this.imageData.data[pos + 2]);
+    }
+
     #highlightBorders(data) {
         // выделим границы четко
 
@@ -181,16 +191,10 @@ export class Album {
                 this.boundary[i][j] = 0;
                 if (data[i][j].r === data[i][j].g && data[i][j].r === data[i][j].b) {
                     if (data[i][j].r <= this.MAX_BLACK_COLOR) {
-                        data[i][j] = new RGB(0, 0, 0, 255, data[i][j].r / 255);
                         this.boundary[i][j] = 1;
                     }
-                    else if (data[i][j].r >= this.MIN_WHITE_COLOR) {
-                        data[i][j] = new RGB(255, 255, 255, 0);
-
-                    }
-                    else data[i][j].k = data[i][j].r / 255;
-
                 }
+                data[i][j].k = data[i][j].r / 255;
 
             }
         }
@@ -210,6 +214,7 @@ export class Album {
 
         return arr;
     }
+
     #colorize(arr, data) {
         //перенесем расцветку из двумерного массива в одномерный
         let k = 0;

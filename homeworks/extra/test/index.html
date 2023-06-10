@@ -1,0 +1,30 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Тест PHP</title>
+  <script type="text/javascript">
+    function refreshData() {
+      var display = document.getElementById("content");
+      var xmlhttp = new XMLHttpRequest();
+      xmlhttp.open("GET", "hello.php");
+      xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+      xmlhttp.send();
+      xmlhttp.onreadystatechange = function () {
+        if (this.readyState === 4 && this.status === 200) {
+          display.innerHTML = this.responseText;
+        } else {
+          display.innerHTML = "Загрузка...";
+        };
+      }
+    }
+  </script>
+</head>
+
+<body>
+  <button onclick=refreshData()>Скажи привет</button>
+  <div id="content"></div>
+</body>
+
+</html>
