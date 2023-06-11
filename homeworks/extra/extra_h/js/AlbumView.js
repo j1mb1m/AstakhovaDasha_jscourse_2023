@@ -1,5 +1,5 @@
-import { colors } from "./colors.js";
 import { RGB } from "./RGB.js";
+import { colors } from "./colors.js";
 
 export class AlbumView {
 
@@ -8,9 +8,11 @@ export class AlbumView {
     constructor(field) {
         this.canvasDraw = field.querySelector('.draw');
         this.canvasBackground = field.querySelector('.background');
+        this.colorsDiv = field.querySelector('.colors');
         this.ctxDraw = this.canvasDraw.getContext("2d", { willReadFrequently: true });
         this.ctxBackground = this.canvasBackground.getContext("2d", { willReadFrequently: true });
         this.album = null;
+
     }
 
     start(album) {
@@ -171,13 +173,13 @@ export class AlbumView {
     }
 
     showColorSet() {
-        const colorsDiv = document.getElementById('colors1');
-        colors.forEach(group => {
-            let newGroupDiv = colorsDiv.appendChild(document.createElement('div'));
-            newGroupDiv.classList.add("color-set");
-            group.forEach(el => {
+        colors.forEach((group, indexGroup) => {
+            let newGroupDiv = this.colorsDiv.appendChild(document.createElement('div'));
+            newGroupDiv.classList.add('color-set');
+            group.forEach((el, indexEl) => {
                 let newDiv = newGroupDiv.appendChild(document.createElement('div'));
-                newDiv.classList.add("color-format");
+                newDiv.setAttribute('data-colorNumber', indexGroup * group.length + indexEl);
+                newDiv.classList.add('color-format');
                 newDiv.style.setProperty('background-color', el);
                 if (!this.currentColorDiv) {
                     this.currentColorDiv = newDiv;
@@ -195,5 +197,16 @@ export class AlbumView {
         this.currentColorDiv = target;
         this.currentColorDiv.classList.add('active');
         this.album.setColor(RGB.rgbToObj(this.currentColorDiv.style.backgroundColor));
+    }
+
+    updatePalette() {
+
+        if (this.currentColorDiv) {
+            this.currentColorDiv.classList.remove('active');
+        }
+        this.currentColorDiv = this.colorsDiv.querySelector(`[data-colorNumber="${this.album.palette.getCurrentPosition()}"]`);
+        if (this.currentColorDiv) {
+            this.currentColorDiv.classList.add('active');
+        }
     }
 }

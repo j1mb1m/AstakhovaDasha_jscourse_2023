@@ -61,24 +61,24 @@ export class AlbumStorage {
 
     }
 
-    uploadImage(file, view) {
+    uploadImage(file) {
 
         if (!file) return currImage;
 
-        let fileName = file.name;
+        let fileName = this.#renameFile(file.name);
 
-        let storageRef = ref(this.storage, this.fileURL + this.#renameFile(fileName));
+        let storageRef = ref(this.storage, this.fileURL + fileName);
         let uploadTask = uploadBytesResumable(storageRef, file);
 
         uploadTask.on('state_changed', (snapshot) => {
             let percent = Math.floor((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-            view.showProgress(percent);
+            this.model.updateProgress(percent);
         }, (error) => {
             console.log(error);
         }, () => {
             getDownloadURL(uploadTask.snapshot.ref).then((url) => {
                 this.model.getImageFromURL(url);
-                this.list.push(this.#renameFile(fileName));
+                this.list.push(fileName);
 
             }).catch((error) => {
                 console.log(error);

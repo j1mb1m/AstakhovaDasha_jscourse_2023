@@ -14,31 +14,31 @@ body {
     height: 100vh;
 }
 
-#fill {
+.fill {
     background-image: url(../images/icons/fill.png);
 }
 
-#pencil {
+.pencil {
     background-image: url(../images/icons/draw.png);
 }
 
-#save {
+.save {
     background-image: url(../images/icons/download.png);
 }
 
-#clear {
+.clear {
     background-image: url(../images/icons/trash.png);
 }
 
-#undo {
+.undo {
     background-image: url(../images/icons/undo.png);
 }
 
-#change {
+.change {
     background-image: url(../images/icons/loop.png);
 }
 
-#upload {
+.upload {
     background-image: url(../images/icons/upload.png);
 }
 

@@ -7,29 +7,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="../../../icon.png" sizes="16x16" type="image/png">
     <link rel="stylesheet" href="css/style.css">
-    <title>H+</title>
+    <title>Раскраска</title>
     <bgsound src="sounds/fone.mp3" loop="1" volume="1000" />
 </head>
 
 <body>
 
-    <div class="some_field">
+    <div id="field1" class="some_field">
 
         <div id="palette">
             <div class="palette-commands">
-                <div id="fill" title="Заливка"></div>
-                <div id="pencil" title="Карандаш"></div>
-                <div id="undo" title="Отменить"></div>
-                <div id="clear" title="Очистить"></div>
-                <div id="save" title="Сохранить"></div>
-                <div id="change" title="Сменить картинку"></div>
-                <div id="upload" title="Добавить картинку"></div>
-                <div id="music" class="music" title="Музыка"></div>
+                <div class="fill" title="Заливка"></div>
+                <div class="pencil" title="Карандаш"></div>
+                <div class="undo" title="Отменить"></div>
+                <div class="clear" title="Очистить"></div>
+                <div class="save" title="Сохранить"></div>
+                <div class="change" title="Сменить картинку"></div>
+                <div class="upload" title="Добавить картинку"></div>
+                <div class="music" class="music" title="Музыка"></div>
                 <input type="file" class="inputFile" id="inputFile" accept="image/png, image/jpeg, image/gif">
             </div>
         </div>
         <div class="main">
-            <div id="field1" class="field field-size__vertical">
+            <div  class="field field-size__vertical">
                 <canvas class="background" width="800" height="800">
                     Обновите браузер
                 </canvas>
@@ -38,14 +38,13 @@
                 </canvas>
 
             </div>
-            <div id="colors1" class="colors">
-                
+            <div class="colors">
+
             </div>
         </div>
         <div id="progress" class="progress"></div>
     </div>
 
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script type="module" src="js/paint.js" defer></script>
 
 </body>

@@ -1,6 +1,7 @@
 'use strict';
 
 import { RGB } from "./RGB.js";
+import { Palette } from "./Palette.js";
 
 export class Album {
 
@@ -10,6 +11,7 @@ export class Album {
 
     constructor() {
         this.view = null;
+        this.sound = null;
         this.boundary = Array(0);
         this.originImg = Array(0);
         this.width = 0;
@@ -18,6 +20,9 @@ export class Album {
         this.color = new RGB(255, 255, 255);
         this.lineSize = 10;
         this.imageURL;
+        this.playFoneMusic = false;
+        this.palette = new Palette();
+        this.storage = null;
     }
 
     update() {
@@ -30,11 +35,13 @@ export class Album {
         this.color = color;
     }
 
-    start(view) {
+    start(storage, view, sound) {
         this.view = view;
+        this.sound = sound;
+        this.storage = storage;
     }
 
-    getImageFromURL(url){
+    getImageFromURL(url) {
         this.imageURL = url;
         this.view.showImageFromURL(url);
     }
@@ -83,7 +90,65 @@ export class Album {
         this.restore.push(Array.from(this.imageData.data));
     }
 
-    fill(x, y) {
+    fill(coord) {
+        if (this.sound)
+            this.btnClick();
+
+        const album = this;
+        let cur_color = this.getBGColor(coord.x, coord.y);
+        let finalColor = this.palette.getCurrentColor();
+        let countUpdates = 8;
+        let stepR = Math.floor(Math.abs(cur_color.r - finalColor.r) / countUpdates);
+        let stepG = Math.floor(Math.abs(cur_color.g - finalColor.g) / countUpdates);
+        let stepB = Math.floor(Math.abs(cur_color.b - finalColor.b) / countUpdates);
+        tick();
+
+        function tick() {
+
+            if (cur_color.r > finalColor.r) {
+                cur_color.r -= stepR;
+                if (cur_color.r < finalColor.r || stepR === 0)
+                    cur_color.r = finalColor.r;
+            }
+            else if (cur_color.r < finalColor.r) {
+                cur_color.r += stepR;
+                if (cur_color.r > finalColor.r || stepR === 0)
+                    cur_color.r = finalColor.r;
+            }
+
+            if (cur_color.g > finalColor.g) {
+                cur_color.g -= stepG;
+                if (cur_color.g < finalColor.g || stepG === 0)
+                    cur_color.g = finalColor.g;
+            }
+            else if (cur_color.g < finalColor.g) {
+                cur_color.g += stepG;
+                if (cur_color.g > finalColor.g || stepG === 0)
+                    cur_color.g = finalColor.g;
+            }
+
+            if (cur_color.b > finalColor.b) {
+                cur_color.b -= stepB;
+                if (cur_color.b < finalColor.b || stepB === 0)
+                    cur_color.b = finalColor.b;
+            }
+            else if (cur_color.b < finalColor.b) {
+                cur_color.b += stepB;
+                if (cur_color.b > finalColor.b || stepB === 0)
+                    cur_color.b = finalColor.b;
+            }
+
+            album.setColor(cur_color);
+            album.#fillArea(coord.x, coord.y);
+
+            if (cur_color.r != finalColor.r || cur_color.g != finalColor.g || cur_color.b != finalColor.b)
+                setTimeout(tick, 10);
+            else album.saveAction();
+        }
+
+    }
+
+    #fillArea(x, y) {
 
         if (this.boundary[y][x]) return;
 
@@ -143,7 +208,10 @@ export class Album {
         this.update();
     }
 
-    clear() {
+    clear(noMusic = false) {
+        if (this.sound && !noMusic)
+            this.btnClick();
+
         for (let i = 0; i < this.width; i++) {
             for (let j = 0; j < this.height; j++) {
                 let pos = (j * this.width + i) * 4;
@@ -158,9 +226,12 @@ export class Album {
     }
 
     undo() {
+        if (this.sound)
+            this.btnClick();
+
         this.restore.pop();
         if (!this.restore.length) {
-            this.clear();
+            this.clear(true);
             return;
         }
 
@@ -226,5 +297,73 @@ export class Album {
                 k += 4;
             }
         }
+    }
+
+    saveImage() {
+        if (this.sound)
+            this.btnClick();
+
+        if (this.view)
+            this.view.downloadCanvasAsImage();
+    }
+
+    btnClick() {
+        if (this.sound)
+            this.sound.click();
+    }
+
+    lineStart(coord) {
+        if (this.view)
+            this.view.lineStart(coord);
+    }
+
+    lineMove(coord) {
+        if (this.view)
+            this.view.lineMove(coord);
+    }
+
+    lineEnd(coord) {
+        if (this.view)
+            this.view.lineEnd(coord);
+    }
+
+    selectColor(number) {
+        if (!number) return;
+
+        this.btnClick();
+        this.setColor(this.palette.getColor(Number(number)));
+        this.view.updatePalette();
+    }
+
+    refreshImage() {
+        if (this.sound)
+            this.btnClick();
+
+        this.storage.getNewImage();
+    }
+
+    uploadImage(file) {
+        if (this.sound)
+            this.btnClick();
+
+        if (this.storage)
+            this.storage.uploadImage(file);
+    }
+
+    updateProgress(percent) {
+        if (this.view)
+            this.view.showProgress(percent);
+    }
+
+    musicOnOff() {
+        if (this.sound) {
+            this.btnClick();
+
+            if (this.playFoneMusic)
+                this.sound.stop();
+            else
+                this.sound.play();
+        }
+        this.playFoneMusic = !this.playFoneMusic;
     }
 }
