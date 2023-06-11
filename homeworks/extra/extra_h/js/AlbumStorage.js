@@ -78,7 +78,7 @@ export class AlbumStorage {
         }, () => {
             getDownloadURL(uploadTask.snapshot.ref).then((url) => {
                 this.model.getImageFromURL(url);
-                this.list.push(url);
+                this.list.push(this.#renameFile(fileName));
 
             }).catch((error) => {
                 console.log(error);
@@ -96,7 +96,7 @@ export class AlbumStorage {
         else if (point === 0) {
             return (new Date().toJSON().slice(0, 10)) + string.substr(point);
         }
-        return string.substr(0, point - 1) + (new Date().toJSON().slice(0, 10)) + string.substr(point);
+        return string.substr(0, point - 1) + (new Date().getTime()) + string.substr(point);
     }
 }
 
