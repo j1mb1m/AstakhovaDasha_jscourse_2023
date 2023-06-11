@@ -1,4 +1,9 @@
+import { colors } from "./colors.js";
+import { RGB } from "./RGB.js";
+
 export class AlbumView {
+
+    currentColorDiv = null;
 
     constructor(field) {
         this.canvasDraw = field.querySelector('.draw');
@@ -15,30 +20,39 @@ export class AlbumView {
         this.ctxDraw.fillRect(0, 0, this.canvasDraw.width, this.canvasDraw.height);
         this.ctxBackground.fillStyle = 'rgb(0,0,0)';
         this.ctxBackground.fillRect(0, 0, this.canvasDraw.width, this.canvasDraw.height);
+    }
 
-/*         let image = new Image();
-        image.src = './images/ulitka6.gif';
+    showImageFromURL(url) {
+        const image = new Image();
+        image.crossOrigin = "Anonymous";
+        image.src = url;
+
         const canvasDraw = this.canvasDraw;
         const ctxDraw = this.ctxDraw;
-        image.onload = function () {
+        const album = this.album;
 
+        image.onload = function () {
             let width = canvasDraw.width;
             let height = canvasDraw.height;
+
             let imgWidth = image.width;
             let imgHeight = image.height;
             let kX = image.width / width;
             let kY = image.height / height;
+
             if (kX <= kY) {
-                imgWidth = Math.floor(image.width / kY);
+                imgWidth = Math.floor(imgWidth / kY);
                 imgHeight = height;
             }
             else {
                 imgWidth = width;
-                imgHeight = Math.floor(image.height / kX);
+                imgHeight = Math.floor(imgHeight / kX);
             }
-            ctxDraw.drawImage(image, 0, 0, imgWidth, imgHeight);
+            ctxDraw.fillStyle = 'rgb(255,255,255)';
+            ctxDraw.fillRect(0, 0, width, height);
+            ctxDraw.drawImage(image, (width - imgWidth) / 2, (height - imgHeight) / 2, imgWidth, imgHeight);
             album.loadImage(ctxDraw.getImageData(0, 0, width, height), width, height);
-        } */
+        }
 
     }
 
@@ -72,13 +86,13 @@ export class AlbumView {
         this.ctxBackground.fillRect(0, 0, this.canvasBackground.width, this.canvasBackground.height);
     }
 
-    downloadCanvasAsImage(){
+    downloadCanvasAsImage() {
         let downloadLink = document.createElement('a');
         downloadLink.setAttribute('download', 'image.png');
-        this.canvasDraw.toBlob(function(blob) {
-          let url = URL.createObjectURL(blob);
-          downloadLink.setAttribute('href', url);
-          downloadLink.click();
+        this.canvasDraw.toBlob(function (blob) {
+            let url = URL.createObjectURL(blob);
+            downloadLink.setAttribute('href', url);
+            downloadLink.click();
         });
     }
 
@@ -86,15 +100,16 @@ export class AlbumView {
         if (!this.album) return;
 
         const album = this.album;
-        let cur_color =  this.album.getBGColor(coord.x, coord.y);
+        let cur_color = this.album.getBGColor(coord.x, coord.y);
         let finalColor = color;
-        let stepR = Math.floor(Math.abs(cur_color.r - finalColor.r)/5);
-        let stepG = Math.floor(Math.abs(cur_color.g - finalColor.g)/5);
-        let stepB = Math.floor(Math.abs(cur_color.b - finalColor.b)/5);
+        let countUpdates = 8;
+        let stepR = Math.floor(Math.abs(cur_color.r - finalColor.r) / countUpdates);
+        let stepG = Math.floor(Math.abs(cur_color.g - finalColor.g) / countUpdates);
+        let stepB = Math.floor(Math.abs(cur_color.b - finalColor.b) / countUpdates);
         tick();
-    
+
         function tick() {
-    
+
             if (cur_color.r > finalColor.r) {
                 cur_color.r -= stepR;
                 if (cur_color.r < finalColor.r || stepR === 0)
@@ -105,7 +120,7 @@ export class AlbumView {
                 if (cur_color.r > finalColor.r || stepR === 0)
                     cur_color.r = finalColor.r;
             }
-    
+
             if (cur_color.g > finalColor.g) {
                 cur_color.g -= stepG;
                 if (cur_color.g < finalColor.g || stepG === 0)
@@ -116,7 +131,7 @@ export class AlbumView {
                 if (cur_color.g > finalColor.g || stepG === 0)
                     cur_color.g = finalColor.g;
             }
-    
+
             if (cur_color.b > finalColor.b) {
                 cur_color.b -= stepB;
                 if (cur_color.b < finalColor.b || stepB === 0)
@@ -127,14 +142,58 @@ export class AlbumView {
                 if (cur_color.b > finalColor.b || stepB === 0)
                     cur_color.b = finalColor.b;
             }
-    
+
             album.setColor(cur_color);
             album.fill(coord.x, coord.y);
-    
+
             if (cur_color.r != finalColor.r || cur_color.g != finalColor.g || cur_color.b != finalColor.b)
                 setTimeout(tick, 10);
-                else album.saveAction();
+            else album.saveAction();
         }
     }
-    
+
+    showProgress(percent) {
+
+        let progress = document.getElementById('progress');
+        progress.classList.add('progress');
+        if (percent) {
+            progress.textContent = percent + '%';
+        }
+        progress.style.width = percent + '%';
+        if (percent === 100) {
+            setTimeout(function () {
+                progress.classList.add('loaded_hiding');
+                progress.classList.remove('progress');
+                progress.style.width = 0;
+                progress.textContent = '';
+            }, 1000);
+        }
+    }
+
+    showColorSet() {
+        const colorsDiv = document.getElementById('colors1');
+        colors.forEach(group => {
+            let newGroupDiv = colorsDiv.appendChild(document.createElement('div'));
+            newGroupDiv.classList.add("color-set");
+            group.forEach(el => {
+                let newDiv = newGroupDiv.appendChild(document.createElement('div'));
+                newDiv.classList.add("color-format");
+                newDiv.style.setProperty('background-color', el);
+                if (!this.currentColorDiv) {
+                    this.currentColorDiv = newDiv;
+                    this.currentColorDiv.classList.add('active');
+                    this.album.setColor(RGB.rgbToObj(el));
+                }
+            });
+        });
+    }
+
+    changeColor(target) {
+        if (this.currentColorDiv)
+            this.currentColorDiv.classList.remove('active');
+
+        this.currentColorDiv = target;
+        this.currentColorDiv.classList.add('active');
+        this.album.setColor(RGB.rgbToObj(this.currentColorDiv.style.backgroundColor));
+    }
 }

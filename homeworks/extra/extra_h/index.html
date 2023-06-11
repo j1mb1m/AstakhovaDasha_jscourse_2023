@@ -12,7 +12,9 @@
 </head>
 
 <body>
+
     <div class="some_field">
+
         <div id="palette">
             <div class="palette-commands">
                 <div id="fill" title="Заливка"></div>
@@ -21,7 +23,9 @@
                 <div id="clear" title="Очистить"></div>
                 <div id="save" title="Сохранить"></div>
                 <div id="change" title="Сменить картинку"></div>
-                <div id="music" class = "music" title="Музыка"></div>
+                <div id="upload" title="Добавить картинку"></div>
+                <div id="music" class="music" title="Музыка"></div>
+                <input type="file" class="inputFile" id="inputFile" accept="image/png, image/jpeg, image/gif">
             </div>
         </div>
         <div class="main">
@@ -32,13 +36,17 @@
                 <canvas class="draw" width="800" height="800">
                     Обновите браузер
                 </canvas>
+
             </div>
             <div id="colors1" class="colors">
+                
             </div>
         </div>
+        <div id="progress" class="progress"></div>
     </div>
+
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script type="module" src="js/paint.js" defer crossorigin="anonymous"></script>
+    <script type="module" src="js/paint.js" defer></script>
 
 </body>
 

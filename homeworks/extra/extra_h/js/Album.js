@@ -4,8 +4,7 @@ import { RGB } from "./RGB.js";
 
 export class Album {
 
-    MAX_BLACK_COLOR = 62; // из диапазона [0..255], где 0 - черный, 255 - белый
-    MIN_WHITE_COLOR = 240;// из диапазона [0..255], где 0 - черный, 255 - белый
+    MAX_BLACK_COLOR = 52; // из диапазона [0..255], где 0 - черный, 255 - белый
     prevCoord = Array();
     restore = Array();
 
@@ -18,14 +17,13 @@ export class Album {
         this.imageData = Array(0);
         this.color = new RGB(255, 255, 255);
         this.lineSize = 10;
-
+        this.imageURL;
     }
 
     update() {
         if (this.view)
             this.view.update(this.imageData);
     }
-
 
 
     setColor(color) {
@@ -36,13 +34,19 @@ export class Album {
         this.view = view;
     }
 
+    getImageFromURL(url){
+        this.imageURL = url;
+        this.view.showImageFromURL(url);
+    }
+
+
     loadImage(imageData, width, height) {
         this.imageData = imageData;
         this.originImg = this.#convertFrom1DTo2DArray(imageData.data, width, height);
         this.#highlightBorders(this.originImg);
         this.height = height;
         this.width = width;
-        this.restore.push(Array.from(this.imageData.data));
+        this.saveAction();
     }
 
     redraw(x, y, backgroundData) {
@@ -67,10 +71,6 @@ export class Album {
                     this.imageData.data[pos] = cur_color.r * this.originImg[j][i].k;
                     this.imageData.data[pos + 1] = cur_color.g * this.originImg[j][i].k;
                     this.imageData.data[pos + 2] = cur_color.b * this.originImg[j][i].k;
-                    if (this.originImg[j][i].k != 1) {
-                        /*                 debugger  */
-                        console.log(this.originImg[j][i]);
-                    }
                 }
             }
         }
@@ -82,7 +82,6 @@ export class Album {
     saveAction() {
         this.restore.push(Array.from(this.imageData.data));
     }
-
 
     fill(x, y) {
 
@@ -112,9 +111,9 @@ export class Album {
             let rightCheck = false;
             let leftCheck = false;
             for (let i = y; i < this.height; i++) {
-                //проверим позицию слева и если не закращена, то поместим в стек для следующего прохода
-                if (x > 0 && !arr[i][x - 1].isMatch(cur_color)) {
-                    if (rightCheck === false && !this.boundary[i][x - 1]) {
+                //проверим позицию справа и если не закрашена, то поместим в стек для следующего прохода
+                if (x > 0) {
+                    if (!arr[i][x - 1].isMatch(cur_color) && !rightCheck && !this.boundary[i][x - 1]) {
                         stack.push([x - 1, i]);
                         rightCheck = true;
                     }
@@ -122,9 +121,9 @@ export class Album {
                         rightCheck = false;
                     }
                 }
-                //проверим позицию справа и если не закращена, то поместим в стек для следующего прохода
-                if (x < this.width - 1 && !arr[i][x + 1].isMatch(cur_color)) {
-                    if (leftCheck === false && !this.boundary[i][x + 1]) {
+                //проверим позицию слева и если не закрашена, то поместим в стек для следующего прохода
+                if (x < this.width - 1) {
+                    if (!arr[i][x + 1].isMatch(cur_color) && !leftCheck && !this.boundary[i][x + 1]) {
                         stack.push([x + 1, i]);
                         leftCheck = true;
                     }
@@ -136,33 +135,34 @@ export class Album {
                     break;
                 }
                 arr[i][x].setColor(cur_color, this.originImg[i][x].k); //установим цвет с учетом сглаживания
-            }
 
+            }
         }
+
         this.#colorize(arr, data);
         this.update();
-
     }
 
     clear() {
         for (let i = 0; i < this.width; i++) {
             for (let j = 0; j < this.height; j++) {
                 let pos = (j * this.width + i) * 4;
-                if (this.imageData.data[pos] != this.imageData.data[pos + 1] != this.imageData.data[pos + 2]) {
-                    this.imageData.data[pos] = this.originImg[j][i].r;
-                    this.imageData.data[pos + 1] = this.originImg[j][i].g;
-                    this.imageData.data[pos + 2] = this.originImg[j][i].b;
-                }
+                this.imageData.data[pos] = this.originImg[j][i].r;
+                this.imageData.data[pos + 1] = this.originImg[j][i].g;
+                this.imageData.data[pos + 2] = this.originImg[j][i].b;
             }
         }
         this.restore = Array();
-        this.restore.push(Array.from(this.imageData.data));
+        this.saveAction();
         this.update();
     }
 
     undo() {
         this.restore.pop();
-        if (!this.restore.length) return;
+        if (!this.restore.length) {
+            this.clear();
+            return;
+        }
 
         for (let i = 0; i < this.width; i++) {
             for (let j = 0; j < this.height; j++) {
@@ -170,7 +170,6 @@ export class Album {
                 this.imageData.data[pos] = this.restore[this.restore.length - 1][pos];
                 this.imageData.data[pos + 1] = this.restore[this.restore.length - 1][pos + 1];
                 this.imageData.data[pos + 2] = this.restore[this.restore.length - 1][pos + 2];
-
             }
         }
 

@@ -38,6 +38,10 @@ body {
     background-image: url(../images/icons/loop.png);
 }
 
+#upload {
+    background-image: url(../images/icons/upload.png);
+}
+
 .music {
     background-image: url(../images/icons/s_off.png);
 }
@@ -45,6 +49,28 @@ body {
 .on {
     background-image: url(../images/icons/s_on.png);
 }
+
+.inputFile {
+    display: none;
+}
+
+.progress {
+    position: absolute;
+    left: 0;
+    height: 20px;
+    bottom: 0;
+    background: #42b983;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: width 0.5s;
+    z-index: 1001;
+}
+
+.loaded_hiding .progress {
+    transition: 0.3s opacity;
+    opacity: 0;
+  }
 
 .some_field {
     position: absolute;
