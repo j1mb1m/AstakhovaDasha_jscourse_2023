@@ -37,7 +37,7 @@ export class AlbumView {
 
         const image = new Image();
         image.crossOrigin = "Anonymous";
-        image.src = url;
+
 
         const canvasDraw = this.canvasDraw;
         const ctxDraw = this.ctxDraw;
@@ -72,6 +72,7 @@ export class AlbumView {
             ref.preloadOptions.degree = 0;
             ref.preloadOptions.revers = false;
         }
+        image.src = url;
 
     }
 
@@ -252,34 +253,34 @@ export class AlbumView {
 
         setTimeout(function () {
             if (ref.preloadOptions.preload) {
-                ref.ctxDraw.fillStyle = 'rgb(255,255,255)';
+                ref.ctxDraw.fillStyle = 'rgb(61, 61, 61)';
                 ref.ctxDraw.fillRect(0, 0, ref.canvasDraw.width, ref.canvasDraw.height);
 
                 ref.ctxDraw.beginPath();
                 ref.preloadOptions.revers ? ref.ctxDraw.arc(ref.canvasDraw.width / 2, ref.canvasDraw.height / 2, 70, ref.preloadOptions.degree, PI2) :
                     ref.ctxDraw.arc(ref.canvasDraw.width / 2, ref.canvasDraw.height / 2, 70, 0, ref.preloadOptions.degree);
 
-                ref.ctxDraw.strokeStyle = 'rgb(61, 61, 61)';
-                ref.ctxDraw.lineWidth = 15;
+                ref.ctxDraw.strokeStyle = 'white';//'rgb(61, 61, 61)';
+                ref.ctxDraw.lineWidth = 10;
                 ref.ctxDraw.stroke();
 
-                ref.preloadOptions.degree += .1;
+                ref.preloadOptions.degree += .05;
                 if (ref.preloadOptions.degree > PI2) {
                     ref.preloadOptions.degree = 0;
                     ref.preloadOptions.revers = !ref.preloadOptions.revers;
                 }
-
-                requestAnimationFrame(function () {
-                    ref.startPreloader();
-                });
             }
+            requestAnimationFrame(function () {
+                ref.startPreloader();
+            });
+
         }, 10)
     }
 
     click() {
         const navigator = window.navigator || {};
         if (navigator.vibrate != undefined) {
-            navigator.vibrate(500);
+            navigator.vibrate(100);
         }
 
     }
