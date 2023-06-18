@@ -150,9 +150,8 @@ body {
         display: block;
         position: absolute;
         left: -30px;
-        top: 10px;
+        top: 20px;
         border-radius: 8px 0 0 8px;
-
     }
 
     .humburger svg {
@@ -161,11 +160,10 @@ body {
 
     .tools-board {
         position: fixed;
-        top: 50%;
+        top: 0;
         right: 0px;
         display: block;
         z-index: 100;
-        transform: translateY(-50%);
         transition: 1s right;
         height: 100vh;
     }
