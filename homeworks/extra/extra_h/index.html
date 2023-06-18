@@ -13,36 +13,89 @@
 
 <body>
 
-    <div id="field1" class="some_field">
 
-        <div id="palette">
-            <div class="palette-commands">
-                <div class="fill" title="Заливка"></div>
-                <div class="pencil" title="Карандаш"></div>
-                <div class="undo" title="Отменить"></div>
-                <div class="clear" title="Очистить"></div>
-                <div class="save" title="Сохранить"></div>
-                <div class="change" title="Сменить картинку"></div>
-                <div class="upload" title="Добавить картинку"></div>
-                <div class="music" class="music" title="Музыка"></div>
-                <input type="file" class="inputFile" id="inputFile" accept="image/png, image/jpeg, image/gif">
-            </div>
-        </div>
-        <div class="main">
-            <div  class="field field-size__vertical">
-                <canvas class="background" width="800" height="800">
+    <div id="field1" class="container">
+
+        <div class="drawing-board">
+            <div class="row">
+                <canvas class="background" width="816" height="1084">
                     Обновите браузер
                 </canvas>
-                <canvas class="draw" width="800" height="800">
+                <canvas class="draw" width="816" height="1084">
                     Обновите браузер
                 </canvas>
-
             </div>
-            <div class="colors">
-
+            <div class="row">
+                <div id="progress" class="progress"></div>
             </div>
         </div>
-        <div id="progress" class="progress"></div>
+
+        <div class="tools-board hidden">
+
+            <div class="humburger">
+                <svg height="60px" id="Layer_1" style="enable-background:new 0 0 128 128;" version="1.1"
+                    viewBox="0 0 128 128" width="15px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <g>
+                        <line style="fill:none;stroke:black;stroke-width:12;stroke-linecap:square;stroke-miterlimit:10;"
+                            x1="87.5" x2="40.5" y1="111" y2="64" />
+                        <line style="fill:none;stroke:black;stroke-width:12;stroke-linecap:square;stroke-miterlimit:10;"
+                            x1="40.5" x2="87.5" y1="64" y2="17" />
+                    </g>
+                </svg>
+            </div>
+            <div class="row">
+                <ul class="options">
+                    <li class="option fill">
+                        <img src='./images/icons/fill.png' alt="Заливка">
+                        <span>Заливка</span>
+                    </li>
+                    <li class="option pencil">
+                        <img src='./images/icons/draw.png' alt="Карандаш">
+                        <span>Карандаш</span>
+                    </li>
+                    <li class="option size">
+                        <input type="range" class="size-range" min="1" max="40" value="10">
+                    </li>
+                    <li class="option undo">
+                        <img src='./images/icons/undo.png' alt="Отменить">
+                        <span>Отменить</span>
+                    </li>
+                    <li class="option clear">
+                        <img src='./images/icons/trash.png' alt="Очистить">
+                        <span>Очистить</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="row">
+                <div class="colors">
+                </div>
+            </div>
+            <div class="row">
+                <ul class="options">
+                    <li class="option save">
+                        <img src='./images/icons/save.png' alt="Сохранить">
+                        <span>Сохранить</span>
+                    </li>
+                    <li class="option change">
+                        <img src='./images/icons/loop.png' alt="Сменить картинку">
+                        <span>Сменить картинку</span>
+                    </li>
+                    <li class="option upload">
+                        <img src='./images/icons/upload.png' alt="Загрузить картинку">
+                        <span>Загрузить картинку</span>
+                    </li>
+                    <li class="option music">
+                        <img class="" src='./images/icons/s_off.png' alt="Музыка выключена">
+                        <img class="off" src='./images/icons/s_on.png' alt="Музыка включена">
+                        <span>Музыка</span>
+                    </li>
+                    <li class="option">
+                        <input type="file" class="inputFile" accept="image/png, image/jpeg, image/gif">
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
 
     <script type="module" src="js/paint.js" defer></script>

@@ -35,6 +35,10 @@ export class Album {
         this.color = color;
     }
 
+    setPensilSize(size) {
+        this.lineSize = size;
+    }
+
     start(storage, view, sound) {
         this.view = view;
         this.sound = sound;
@@ -365,5 +369,11 @@ export class Album {
                 this.sound.play();
         }
         this.playFoneMusic = !this.playFoneMusic;
+        this.view.updateMusicIcon();
+    }
+
+    toggleMenu() {
+        if (this.view)
+            this.view.toggleMenu();
     }
 }

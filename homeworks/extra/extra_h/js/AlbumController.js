@@ -2,7 +2,7 @@
 
 export function AlbumController() {
 
-    let fillBtn, pencilBtn, clearBtn, undoBtn, saveBtn, changeBtn, inputFileBtn, uploadBtn, musicBtn, colorsDiv, canvas;
+    let fillBtn, pencilBtn, clearBtn, undoBtn, saveBtn, changeBtn, inputFileBtn, uploadBtn, musicBtn, colorsDiv, canvas, sizeRange, hbBtn;
 
     const self = this;
 
@@ -43,6 +43,12 @@ export function AlbumController() {
 
         colorsDiv = container.querySelector('.colors');
         colorsDiv.addEventListener("click", self.selectColor);
+
+        sizeRange = container.querySelector('.size-range');
+        sizeRange.addEventListener("change", self.sizeRangeBtnChange);
+
+        hbBtn = container.querySelector('.humburger');
+        hbBtn.addEventListener("click", self.toggleMenu);
 
         canvas = container.querySelector('.draw');
     }
@@ -119,8 +125,7 @@ export function AlbumController() {
 
         self.album.btnClick();
 
-        const currentActiveDiv = event.target;
-        currentActiveDiv.classList.add('active');
+        fillBtn.classList.add('active');
         pencilBtn.classList.remove('active');
 
         self.canvas.addEventListener('mouseup', self.fill);
@@ -136,8 +141,7 @@ export function AlbumController() {
 
         self.album.btnClick();
 
-        const currentActiveDiv = event.target;
-        currentActiveDiv.classList.add('active');
+        pencilBtn.classList.add('active');
         fillBtn.classList.remove('active');
 
         self.canvas.removeEventListener('mouseup', self.fill);
@@ -180,9 +184,6 @@ export function AlbumController() {
         event.preventDefault();
 
         self.album.musicOnOff();
-
-        event.target.classList.toggle('on');
-        event.target.classList.toggle('active');
     }
 
     self.changeBtnClick = function (event) {
@@ -192,6 +193,18 @@ export function AlbumController() {
         self.album.refreshImage();
     }
 
+    self.sizeRangeBtnChange = function (event) {
+        event.stopPropagation();
+        event.preventDefault();
 
+        self.album.setPensilSize(event.target.value);
+    }
+
+    self.toggleMenu = function (event) {
+        event.stopPropagation();
+        event.preventDefault();
+
+        self.album.toggleMenu();
+    }
 }
 

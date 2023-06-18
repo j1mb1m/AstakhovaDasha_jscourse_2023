@@ -12,7 +12,7 @@ export class AlbumView {
         this.ctxDraw = this.canvasDraw.getContext("2d", { willReadFrequently: true });
         this.ctxBackground = this.canvasBackground.getContext("2d", { willReadFrequently: true });
         this.album = null;
-
+        this.field = field;
     }
 
     start(album) {
@@ -208,5 +208,19 @@ export class AlbumView {
         if (this.currentColorDiv) {
             this.currentColorDiv.classList.add('active');
         }
+    }
+
+    updateMusicIcon() {
+        const music = this.field.querySelector('.music').querySelectorAll('img');
+
+        music.forEach(el => {
+            el.classList.toggle('off');
+        });
+
+    }
+
+    toggleMenu() {
+        const tools_board = this.field.querySelector('.tools-board');
+        tools_board.classList.toggle('hidden');
     }
 }
