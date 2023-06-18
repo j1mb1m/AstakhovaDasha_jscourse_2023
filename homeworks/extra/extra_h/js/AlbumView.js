@@ -31,43 +31,36 @@ export class AlbumView {
     }
 
     showImageFromURL(url) {
-        this.preloadOptions.preload = true;
-        console.log(this.preload);
+        if (!this.preloadOptions.preload)
+            this.preloadOptions.preload = true;
+
         this.startPreloader();
 
         const image = new Image();
         image.crossOrigin = "Anonymous";
-
-
-        const canvasDraw = this.canvasDraw;
-        const ctxDraw = this.ctxDraw;
-        const album = this.album;
-
         const ref = this;
 
         image.onload = function () {
 
-            let width = canvasDraw.width;
-            let height = canvasDraw.height;
+            let width = ref.canvasDraw.width;
+            let height = ref.canvasDraw.height;
 
-            let imgWidth = image.width;
-            let imgHeight = image.height;
             let kX = image.width / width;
             let kY = image.height / height;
 
             if (kX <= kY) {
-                imgWidth = Math.floor(imgWidth / kY);
+                imgWidth = Math.floor(image.width / kY);
                 imgHeight = height;
             }
             else {
-                imgWidth = width;
-                imgHeight = Math.floor(imgHeight / kX);
+                image.width = width;
+                image.height = Math.floor(image.height / kX);
             }
-            ctxDraw.fillStyle = 'rgb(255,255,255)';
-            ctxDraw.fillRect(0, 0, width, height);
-            ctxDraw.drawImage(image, (width - imgWidth) / 2, (height - imgHeight) / 2, imgWidth, imgHeight);
+            ref.ctxDraw.fillStyle = 'rgb(255,255,255)';
+            ref.ctxDraw.fillRect(0, 0, width, height);
+            ref.ctxDraw.drawImage(image, (width - image.width) / 2, (height - image.height) / 2, image.width, image.height);
 
-            album.loadImage(ctxDraw.getImageData(0, 0, width, height), width, height);
+            ref.album.loadImage(ref.ctxDraw.getImageData(0, 0, width, height), width, height);
             ref.preloadOptions.preload = false;
             ref.preloadOptions.degree = 0;
             ref.preloadOptions.revers = false;

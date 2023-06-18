@@ -21,6 +21,7 @@ body {
     max-width: 950px;
     max-height: 100vh;
     gap: 10px;
+    justify-content: center;
 }
 
 .humburger {
@@ -189,9 +190,9 @@ body {
         margin: 5px;
     }
 
-     .colors {
+    .colors {
         height: 300px;
         overflow-y: scroll;
-    } 
+    }
 
 }
