@@ -375,6 +375,9 @@ export class Album {
     toggleMenu() {
         if (this.view)
             this.view.toggleMenu();
+            
+        if (this.sound)
+            this.btnClick();
     }
 
     hideMenu() {
