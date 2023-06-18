@@ -276,5 +276,12 @@ export class AlbumView {
         }, 10)
     }
 
+    click() {
+        const navigator = window.navigator || {};
+        if (navigator.vibrate != undefined) {
+            navigator.vibrate(500);
+        }
+
+    }
 
 }

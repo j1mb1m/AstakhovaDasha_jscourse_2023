@@ -314,6 +314,8 @@ export class Album {
     btnClick() {
         if (this.sound)
             this.sound.click();
+        if (this.view)
+            this.view.click();
     }
 
     lineStart(coord) {
@@ -375,7 +377,7 @@ export class Album {
     toggleMenu() {
         if (this.view)
             this.view.toggleMenu();
-            
+
         if (this.sound)
             this.btnClick();
     }
