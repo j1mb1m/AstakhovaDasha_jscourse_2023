@@ -19,6 +19,7 @@ export class AlbumSound {
     click() {
         this.buttonClick.currentTime = 0; // в секундах
         this.buttonClick.play();
+        this.buttonClick.vibrate(1000);
     }
 
     play() {
