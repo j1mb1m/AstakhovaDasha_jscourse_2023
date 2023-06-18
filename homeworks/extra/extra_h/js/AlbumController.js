@@ -77,6 +77,7 @@ export function AlbumController() {
         event.stopPropagation();
 
         const coord = self.getCurrentСoordinates(event);
+        self.album.hideMenu();
         self.album.fill(coord);
     }
 
@@ -91,6 +92,7 @@ export function AlbumController() {
         self.canvas.addEventListener("mouseup", self.pensilEnd);
 
         let coord = self.getCurrentСoordinates(event);
+        self.album.hideMenu();
         self.album.lineStart(coord);
         self.album.lineMove(coord);
     }
@@ -149,6 +151,7 @@ export function AlbumController() {
 
         self.canvas.addEventListener('touchstart', self.pensilStart);
         self.canvas.addEventListener('touchend', self.pensilEnd);
+
     }
 
     self.clearBtnClick = function (event) {

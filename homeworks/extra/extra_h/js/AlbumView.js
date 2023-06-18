@@ -13,6 +13,11 @@ export class AlbumView {
         this.ctxBackground = this.canvasBackground.getContext("2d", { willReadFrequently: true });
         this.album = null;
         this.field = field;
+        this.preloadOptions = {
+            preload: true,
+            degree: 0,
+            revers: false,
+        };
     }
 
     start(album) {
@@ -22,9 +27,14 @@ export class AlbumView {
         this.ctxDraw.fillRect(0, 0, this.canvasDraw.width, this.canvasDraw.height);
         this.ctxBackground.fillStyle = 'rgb(0,0,0)';
         this.ctxBackground.fillRect(0, 0, this.canvasDraw.width, this.canvasDraw.height);
+        this.startPreloader();
     }
 
     showImageFromURL(url) {
+        this.preloadOptions.preload = true;
+        console.log(this.preload);
+        this.startPreloader();
+
         const image = new Image();
         image.crossOrigin = "Anonymous";
         image.src = url;
@@ -33,7 +43,10 @@ export class AlbumView {
         const ctxDraw = this.ctxDraw;
         const album = this.album;
 
+        const ref = this;
+
         image.onload = function () {
+
             let width = canvasDraw.width;
             let height = canvasDraw.height;
 
@@ -53,7 +66,11 @@ export class AlbumView {
             ctxDraw.fillStyle = 'rgb(255,255,255)';
             ctxDraw.fillRect(0, 0, width, height);
             ctxDraw.drawImage(image, (width - imgWidth) / 2, (height - imgHeight) / 2, imgWidth, imgHeight);
+
             album.loadImage(ctxDraw.getImageData(0, 0, width, height), width, height);
+            ref.preloadOptions.preload = false;
+            ref.preloadOptions.degree = 0;
+            ref.preloadOptions.revers = false;
         }
 
     }
@@ -223,4 +240,41 @@ export class AlbumView {
         const tools_board = this.field.querySelector('.tools-board');
         tools_board.classList.toggle('hidden');
     }
+
+    hideMenu() {
+        const tools_board = this.field.querySelector('.tools-board');
+        tools_board.classList.add('hidden');
+    }
+
+    startPreloader() {
+        const ref = this;
+        const PI2 = Math.PI * 2;
+
+        setTimeout(function () {
+            if (ref.preloadOptions.preload) {
+                ref.ctxDraw.fillStyle = 'rgb(255,255,255)';
+                ref.ctxDraw.fillRect(0, 0, ref.canvasDraw.width, ref.canvasDraw.height);
+
+                ref.ctxDraw.beginPath();
+                ref.preloadOptions.revers ? ref.ctxDraw.arc(ref.canvasDraw.width / 2, ref.canvasDraw.height / 2, 70, ref.preloadOptions.degree, PI2) :
+                    ref.ctxDraw.arc(ref.canvasDraw.width / 2, ref.canvasDraw.height / 2, 70, 0, ref.preloadOptions.degree);
+
+                ref.ctxDraw.strokeStyle = 'rgb(61, 61, 61)';
+                ref.ctxDraw.lineWidth = 15;
+                ref.ctxDraw.stroke();
+
+                ref.preloadOptions.degree += .1;
+                if (ref.preloadOptions.degree > PI2) {
+                    ref.preloadOptions.degree = 0;
+                    ref.preloadOptions.revers = !ref.preloadOptions.revers;
+                }
+
+                requestAnimationFrame(function () {
+                    ref.startPreloader();
+                });
+            }
+        }, 10)
+    }
+
+
 }

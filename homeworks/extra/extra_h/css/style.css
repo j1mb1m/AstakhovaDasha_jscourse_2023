@@ -10,9 +10,9 @@ body {
     justify-content: center;
     min-height: 100vh;
     background-image: url(../images/bg2.jpg);
-    background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    background-position: top left;
 }
 
 .container {
@@ -59,7 +59,6 @@ body {
 
 .drawing-board {
     background: #fff;
-    flex: 1;
     position: relative;
 }
 
@@ -135,15 +134,6 @@ body {
     opacity: 0;
 }
 
-@media (max-width: 980px) {
-    body {
-        background-position: top left;
-    }
-
-    .drawing-board {
-        flex: none;
-    }
-}
 
 @media (max-width: 850px) {
     .container {
@@ -159,28 +149,33 @@ body {
     .humburger {
         display: block;
         position: absolute;
-        left: -15px;
-        top: 50%;
-        transform: translateY(-50%);
+        left: -30px;
+        top: 10px;
         border-radius: 8px 0 0 8px;
+
+    }
+
+    .humburger svg {
+        transform: rotate(180deg);
     }
 
     .tools-board {
         position: fixed;
         top: 50%;
-        right: -210px;
+        right: 0px;
         display: block;
         z-index: 100;
         transform: translateY(-50%);
-        transition: 1.5s right;
+        transition: 1s right;
+        height: 100vh;
     }
 
     .hidden {
-        right: 0;
+        right: -210px;
     }
 
     .hidden .humburger svg {
-        transform: rotate(180deg);
+        transform: rotate(0deg);
     }
 }
 
@@ -196,9 +191,9 @@ body {
         margin: 5px;
     }
 
-    .colors {
-        height: 200px;
+     .colors {
+        height: 300px;
         overflow-y: scroll;
-    }
+    } 
 
 }
