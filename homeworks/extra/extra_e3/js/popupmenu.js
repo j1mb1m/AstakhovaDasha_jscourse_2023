@@ -23,7 +23,7 @@ const sample = [
         }
       ]
   },
-  { name: 'Пункт 2 длинный', url: 'http://www.tut.by' },
+  { name: 'Пункт 2 длинный', url: 'http://www.onliner.by' },
   {
     name: 'Пункт 3', submenu:
       [
